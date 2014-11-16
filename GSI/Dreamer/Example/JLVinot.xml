@@ -1,0 +1,1421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE diagram PUBLIC "QOC DTD"
+                         "Qoc.dtd">
+<diagram>
+    <sessions>
+        <session id="s1" date="2004/9/1/10/19/46">
+            <maker author="a1"/>
+            <maker author="a3"/>
+            <decider author="a2"/>
+        </session>
+    </sessions>
+    <nodes>
+        <node>
+            <question id="q1">
+                <itemQuestion label="Presentation of DREAM items"
+                    seeheim="Presentation" session="s1"/>
+            </question>
+            <question id="q2">
+                <itemQuestion label="How to display links' weights ?" session="s1"/>
+            </question>
+            <question id="q3">
+                <itemQuestion label="How display Q, O &amp; C ?" session="s1"/>
+            </question>
+            <question id="q4">
+                <itemQuestion
+                    label="How distinguish glyph between Q O C(close)" session="s1"/>
+            </question>
+            <question id="q5">
+                <itemQuestion
+                    label="How display weight associated to criteria ?" session="s1"/>
+            </question>
+            <question id="q6">
+                <itemQuestion label="Diagram spatial arrangement ?" session="s1"/>
+            </question>
+            <question id="q7">
+                <itemQuestion label="Need several views / mode" session="s1"/>
+            </question>
+            <question id="q8">
+                <itemQuestion label="Mistake : links ?" session="s1"/>
+            </question>
+            <question id="q9">
+                <itemQuestion label="Navigation into a table ?" session="s1"/>
+            </question>
+            <question id="q10"/>
+            <question id="q11">
+                <itemQuestion
+                    label="Global visualisation of project avancement" session="s1"/>
+            </question>
+            <option id="o1">
+                <itemOption label="Line width" session="s1"/>
+            </option>
+            <option id="o2">
+                <itemOption label="Spring / firmness" session="s1"/>
+            </option>
+            <option id="o3">
+                <itemOption label="Icon" session="s1"/>
+            </option>
+            <option id="o4">
+                <itemOption label="Colors &amp; glyphs" session="s1"/>
+            </option>
+            <option id="o5">
+                <itemOption label="Glyph exaggerate 1 specificity" session="s1"/>
+            </option>
+            <option id="o6">
+                <itemOption label="Numbered weight" session="s1"/>
+            </option>
+            <option id="o7">
+                <itemOption label="Shape = f(weight)"
+                    additionalInfo="Sûr --> forme dure&lt;br>Pas sûr --> forme molle&lt;br>Floue --> forme transparente" session="s1"/>
+            </option>
+            <option id="o8">
+                <itemOption label="Strongest criterion on the top" session="s1"/>
+            </option>
+            <option id="o9">
+                <itemOption label="Classical &quot;Tree&quot;" session="s1"/>
+            </option>
+            <option id="o10">
+                <itemOption label="Table" session="s1"/>
+            </option>
+            <option id="o11">
+                <itemOption label="Atomic representation" session="s1"/>
+            </option>
+            <option id="o12">
+                <itemOption label="O around the Q" session="s1"/>
+            </option>
+            <option id="o13">
+                <itemOption label="Web style" session="s1"/>
+            </option>
+            <option id="o14">
+                <itemOption label="x shift " session="s1"/>
+            </option>
+            <option id="o15"/>
+            <option id="o16"/>
+            <option id="o17"/>
+            <option id="o18">
+                <itemOption label="Tree" session="s1"/>
+            </option>
+            <option id="o19">
+                <itemOption label="Table" session="s1"/>
+            </option>
+            <option id="o20">
+                <itemOption label="Shape = f(evolution)"
+                    additionalInfo="Représentation en fonction de l'état d'avancement&lt;br>du projet : &lt;br> - Avancé = dur&lt;br> - Début = transparence / floue" session="s1"/>
+            </option>
+            <criteria id="c1">
+                <itemCriteria label="Easy to implement" weight="4" session="s1"/>
+            </criteria>
+            <criteria id="c2">
+                <itemCriteria label="Neutral link quickly identifiable"
+                    weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c3">
+                <itemCriteria label="Perspective length distance"
+                    weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c4">
+                <itemCriteria label="Perspective bright dark" weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c5">
+                <itemCriteria label="Progressive kinematic" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c6">
+                <itemCriteria label="Perceptive color" weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c7">
+                <itemCriteria label="Perceptive glyph" weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c8">
+                <itemCriteria label="Perceptive luminosity" weight="1" session="s1"/>
+            </criteria>
+            <criteria id="c9">
+                <itemCriteria label="Reading way" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c10"/>
+            <criteria id="c11">
+                <itemCriteria label="Helpful for design diagrams"
+                    weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c12"/>
+            <criteria id="c13"/>
+            <criteria id="c14">
+                <itemCriteria label="Expression power" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c15"/>
+            <criteria id="c16"/>
+            <criteria id="c17"/>
+            <criteria id="c18">
+                <itemCriteria label="Logic structuration" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c19">
+                <itemCriteria label="Arrangement constrain" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c20">
+                <itemCriteria label="Vision by block" weight="3" session="s1"/>
+            </criteria>
+            <criteria id="c21">
+                <itemCriteria label="Global visualisation" weight="3" session="s1"/>
+            </criteria>
+            <factor id="f1">
+                <itemFactor label="Easy to detect" weight="1" session="s1"/>
+            </factor>
+        </node>
+        <position id="p1" idref="q1">
+            <itemPosition posX="45" posY="360" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p2" idref="q2">
+            <itemPosition posX="210" posY="90" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p3" idref="o1">
+            <itemPosition posX="330" posY="60" width="60" height="60"
+                session="s1" selected="true"/>
+        </position>
+        <position id="p4" idref="o2">
+            <itemPosition posX="330" posY="120" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p5" idref="c1">
+            <itemPosition posX="450" posY="0" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p6" idref="c2">
+            <itemPosition posX="450" posY="60" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p7" idref="c3">
+            <itemPosition posX="450" posY="120" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p8" idref="c4">
+            <itemPosition posX="450" posY="180" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p9" idref="q3">
+            <itemPosition posX="210" posY="360" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p10" idref="o3">
+            <itemPosition posX="330" posY="330" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p11" idref="o4">
+            <itemPosition posX="330" posY="405" width="60" height="60"
+                session="s1" selected="true"/>
+        </position>
+        <position id="p12" idref="c1">
+            <itemPosition posX="450" posY="270" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p13" idref="c5">
+            <itemPosition posX="450" posY="330" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p14" idref="c6">
+            <itemPosition posX="450" posY="390" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p15" idref="c7">
+            <itemPosition posX="450" posY="450" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p16" idref="f1">
+            <itemPosition posX="600" posY="150" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p17" idref="f1">
+            <itemPosition posX="600" posY="420" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p18" idref="q4">
+            <itemPosition posX="330" posY="540" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p19" idref="o5">
+            <itemPosition posX="450" posY="540" width="60" height="60"
+                session="s1" selected="true"/>
+        </position>
+        <position id="p20" idref="q5">
+            <itemPosition posX="210" posY="720" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p21" idref="o6">
+            <itemPosition posX="330" posY="660" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p22" idref="o7">
+            <itemPosition posX="330" posY="720" width="60" height="60"
+                session="s1" selected="true"/>
+        </position>
+        <position id="p23" idref="o8">
+            <itemPosition posX="330" posY="780" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p24" idref="c8">
+            <itemPosition posX="450" posY="735" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p25" idref="c1">
+            <itemPosition posX="450" posY="615" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p26" idref="c6">
+            <itemPosition posX="450" posY="675" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p27" idref="c9">
+            <itemPosition posX="450" posY="795" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p28" idref="f1">
+            <itemPosition posX="600" posY="705" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p29" idref="c10"/>
+        <position id="p30" idref="q6">
+            <itemPosition posX="732" posY="225" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p31" idref="o9">
+            <itemPosition posX="867" posY="120" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p32" idref="o10">
+            <itemPosition posX="867" posY="195" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p33" idref="o11">
+            <itemPosition posX="867" posY="270" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p34" idref="o12">
+            <itemPosition posX="867" posY="345" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p35" idref="c11">
+            <itemPosition posX="1029" posY="115" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p36" idref="q7">
+            <itemPosition posX="882" posY="450" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p37" idref="q8">
+            <itemPosition posX="882" posY="540" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p38" idref="q9">
+            <itemPosition posX="1020" posY="538" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p39" idref="o13">
+            <itemPosition posX="1125" posY="493" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p40" idref="o14">
+            <itemPosition posX="1125" posY="583" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p41" idref="c12"/>
+        <position id="p42" idref="c13"/>
+        <position id="p43" idref="c13"/>
+        <position id="p44" idref="c14">
+            <itemPosition posX="1230" posY="613" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p45" idref="q10"/>
+        <position id="p46" idref="o15"/>
+        <position id="p47" idref="o16"/>
+        <position id="p48" idref="c15"/>
+        <position id="p49" idref="c16"/>
+        <position id="p50" idref="c17"/>
+        <position id="p51" idref="o17"/>
+        <position id="p52" idref="c1">
+            <itemPosition posX="974" posY="769" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p53" idref="q11">
+            <itemPosition posX="734" posY="844" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p54" idref="o18">
+            <itemPosition posX="854" posY="769" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p55" idref="o19">
+            <itemPosition posX="854" posY="829" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p56" idref="o20">
+            <itemPosition posX="854" posY="889" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p57" idref="c6">
+            <itemPosition posX="974" posY="889" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p58" idref="c8">
+            <itemPosition posX="974" posY="829" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p59" idref="f1">
+            <itemPosition posX="1094" posY="859" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p60" idref="c18">
+            <itemPosition posX="1029" posY="175" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p61" idref="c19">
+            <itemPosition posX="1029" posY="235" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p62" idref="c20">
+            <itemPosition posX="1029" posY="295" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p63" idref="c21">
+            <itemPosition posX="1029" posY="355" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p64" idref="c20">
+            <itemPosition posX="1225" posY="479" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+        <position id="p65" idref="c3">
+            <itemPosition posX="1230" posY="540" width="60" height="60"
+                session="s1" selected="false"/>
+        </position>
+    </nodes>
+    <links>
+        <link id="l1">
+            <itemLink from="p2" to="p3" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l2">
+            <itemLink from="p2" to="p4" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l3">
+            <itemLink from="p1" to="p2" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l4">
+            <itemLink from="p3" to="p5" value="5" session="s1" measure="">
+                <blackBox posX="435" posY="22" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l5">
+            <itemLink from="p3" to="p6" value="5" session="s1" measure="">
+                <blackBox posX="435" posY="90" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="360.0" yPoint="90.0"/>
+                    <breakPointItem xPoint="452.5" yPoint="107.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l6">
+            <itemLink from="p3" to="p7" value="4" session="s1" measure="">
+                <blackBox posX="435" posY="135" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="360.0" yPoint="90.0"/>
+                    <breakPointItem xPoint="437.5" yPoint="152.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="437.5" yPoint="152.5"/>
+                    <breakPointItem xPoint="480.0" yPoint="150.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l7">
+            <itemLink from="p4" to="p8" value="3" session="s1" measure="">
+                <blackBox posX="435" posY="195" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l8">
+            <itemLink from="p4" to="p7" value="4" session="s1" measure="">
+                <blackBox posX="450" posY="150" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l9">
+            <itemLink from="p4" to="p6" value="1" session="s1" measure="">
+                <blackBox posX="435" posY="105" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="422.5" yPoint="122.5"/>
+                    <breakPointItem xPoint="480.0" yPoint="90.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l10">
+            <itemLink from="p4" to="p5" value="1" session="s1" measure="">
+                <blackBox posX="435" posY="45" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l11">
+            <itemLink from="p3" to="p8" value="4" session="s1" measure="">
+                <blackBox posX="450" posY="180" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="360.0" yPoint="90.0"/>
+                    <breakPointItem xPoint="437.5" yPoint="212.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l12">
+            <itemLink from="p1" to="p9" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l13">
+            <itemLink from="p9" to="p10" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="240.0" yPoint="390.0"/>
+                    <breakPointItem xPoint="360.0" yPoint="360.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l14">
+            <itemLink from="p9" to="p11" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="240.0" yPoint="390.0"/>
+                    <breakPointItem xPoint="360.0" yPoint="435.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l15">
+            <itemLink from="p10" to="p12" value="3" session="s1" measure="">
+                <blackBox posX="435" posY="300" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l16">
+            <itemLink from="p10" to="p13" value="3" session="s1" measure="">
+                <blackBox posX="435" posY="360" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l17">
+            <itemLink from="p10" to="p14" value="3" session="s1" measure="">
+                <blackBox posX="450" posY="405" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l18">
+            <itemLink from="p10" to="p15" value="3" session="s1" measure="">
+                <blackBox posX="450" posY="450" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l19">
+            <itemLink from="p11" to="p15" value="3" session="s1" measure="">
+                <blackBox posX="435" posY="487" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l20">
+            <itemLink from="p11" to="p14" value="3" session="s1" measure="">
+                <blackBox posX="450" posY="427" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l21">
+            <itemLink from="p11" to="p13" value="3" session="s1" measure="">
+                <blackBox posX="450" posY="382" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l22">
+            <itemLink from="p11" to="p12" value="3" session="s1" measure="">
+                <blackBox posX="450" posY="322" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="360.0" yPoint="435.0"/>
+                    <breakPointItem xPoint="452.5" yPoint="325.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l23">
+            <itemLink from="p7" to="p16" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l24">
+            <itemLink from="p8" to="p16" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l25">
+            <itemLink from="p14" to="p17" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l26">
+            <itemLink from="p15" to="p17" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l27">
+            <itemLink from="p9" to="p18" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l28">
+            <itemLink from="p18" to="p19" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="345.0" yPoint="570.0"/>
+                    <breakPointItem xPoint="480.0" yPoint="570.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l29">
+            <itemLink from="p1" to="p20" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l30">
+            <itemLink from="p20" to="p21" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="240.0" yPoint="750.0"/>
+                    <breakPointItem xPoint="345.0" yPoint="690.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l31">
+            <itemLink from="p20" to="p22" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="240.0" yPoint="750.0"/>
+                    <breakPointItem xPoint="345.0" yPoint="750.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l32">
+            <itemLink from="p20" to="p23" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="240.0" yPoint="750.0"/>
+                    <breakPointItem xPoint="345.0" yPoint="810.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l33">
+            <itemLink from="p26" to="p28" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l34">
+            <itemLink from="p24" to="p28" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l35">
+            <itemLink from="p21" to="p25" value="5" session="s1" measure="">
+                <blackBox posX="420" posY="667" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l36">
+            <itemLink from="p21" to="p26" value="2" session="s1" measure="">
+                <blackBox posX="420" posY="697" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l37">
+            <itemLink from="p21" to="p24" value="2" session="s1" measure="">
+                <blackBox posX="420" posY="727" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l38">
+            <itemLink from="p21" to="p27" value="2" session="s1" measure="">
+                <blackBox posX="420" posY="757" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l39">
+            <itemLink from="p23" to="p27" value="5" session="s1" measure="">
+                <blackBox posX="420" posY="817" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l40">
+            <itemLink from="p23" to="p24" value="2" session="s1" measure="">
+                <blackBox posX="420" posY="787" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l41"/>
+        <link id="l42">
+            <itemLink from="p23" to="p26" value="2" session="s1" measure="">
+                <blackBox posX="420" posY="757" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l43">
+            <itemLink from="p23" to="p25" value="5" session="s1" measure="">
+                <blackBox posX="420" posY="727" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l44">
+            <itemLink from="p22" to="p25" value="3" session="s1" measure="">
+                <blackBox posX="420" posY="697" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l45">
+            <itemLink from="p22" to="p26" value="5" session="s1" measure="">
+                <blackBox posX="420" posY="727" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l46">
+            <itemLink from="p22" to="p24" value="5" session="s1" measure="">
+                <blackBox posX="420" posY="757" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l47">
+            <itemLink from="p22" to="p27" value="3" session="s1" measure="">
+                <blackBox posX="420" posY="787" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l48">
+            <itemLink from="p30" to="p31" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l49">
+            <itemLink from="p30" to="p32" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l50">
+            <itemLink from="p30" to="p33" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="897.0" yPoint="300.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l51">
+            <itemLink from="p30" to="p34" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="897.0" yPoint="375.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l52">
+            <itemLink from="p30" to="p36" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="852.0" yPoint="480.0"/>
+                    <breakPointItem xPoint="912.0" yPoint="480.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l53">
+            <itemLink from="p30" to="p37" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="822.0" yPoint="570.0"/>
+                    <breakPointItem xPoint="912.0" yPoint="570.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l54">
+            <itemLink from="p37" to="p38" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="912.0" yPoint="570.0"/>
+                    <breakPointItem xPoint="1050.0" yPoint="568.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l55">
+            <itemLink from="p38" to="p39" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="1050.0" yPoint="568.0"/>
+                    <breakPointItem xPoint="1155.0" yPoint="523.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l56">
+            <itemLink from="p38" to="p40" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="1050.0" yPoint="568.0"/>
+                    <breakPointItem xPoint="1155.0" yPoint="613.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l57"/>
+        <link id="l58"/>
+        <link id="l59"/>
+        <link id="l60">
+            <itemLink from="p39" to="p44" value="1" session="s1" measure="">
+                <blackBox posX="1207" posY="628" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="1155.0" yPoint="523.0"/>
+                    <breakPointItem xPoint="1210.0" yPoint="630.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="1210.0" yPoint="630.5"/>
+                    <breakPointItem xPoint="1260.0" yPoint="643.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l61"/>
+        <link id="l62">
+            <itemLink from="p40" to="p44" value="1" session="s1" measure="">
+                <blackBox posX="1207" posY="643" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="1155.0" yPoint="613.0"/>
+                    <breakPointItem xPoint="1210.0" yPoint="645.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="1210.0" yPoint="645.5"/>
+                    <breakPointItem xPoint="1260.0" yPoint="643.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l63"/>
+        <link id="l64"/>
+        <link id="l65"/>
+        <link id="l66"/>
+        <link id="l67"/>
+        <link id="l68"/>
+        <link id="l69"/>
+        <link id="l70"/>
+        <link id="l71"/>
+        <link id="l72"/>
+        <link id="l73"/>
+        <link id="l74"/>
+        <link id="l75">
+            <itemLink from="p57" to="p59" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="1004.0" yPoint="919.4013474494707"/>
+                    <breakPointItem xPoint="1124.0" yPoint="889.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l76">
+            <itemLink from="p58" to="p59" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="1004.0" yPoint="859.4013474494707"/>
+                    <breakPointItem xPoint="1124.0" yPoint="889.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l77">
+            <itemLink from="p54" to="p52" value="5" session="s1" measure="">
+                <blackBox posX="944" posY="799" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="799.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="801.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="801.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="799.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l78">
+            <itemLink from="p54" to="p58" value="2" session="s1" measure="">
+                <blackBox posX="944" posY="829" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="799.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="831.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="831.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="859.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l79">
+            <itemLink from="p54" to="p57" value="2" session="s1" measure="">
+                <blackBox posX="944" posY="859" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="799.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="861.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="861.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="919.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l80">
+            <itemLink from="p56" to="p57" value="5" session="s1" measure="">
+                <blackBox posX="944" posY="919" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="919.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="921.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="921.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="919.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l81">
+            <itemLink from="p56" to="p58" value="5" session="s1" measure="">
+                <blackBox posX="944" posY="889" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="919.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="891.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="891.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="859.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l82">
+            <itemLink from="p56" to="p52" value="3" session="s1" measure="">
+                <blackBox posX="944" posY="859" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="884.0" yPoint="919.4013474494707"/>
+                    <breakPointItem xPoint="946.5" yPoint="861.9013474494707"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="946.5" yPoint="861.9013474494707"/>
+                    <breakPointItem xPoint="1004.0" yPoint="799.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l83">
+            <itemLink from="p53" to="p54" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="764.0" yPoint="874.4013474494707"/>
+                    <breakPointItem xPoint="884.0" yPoint="799.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l84">
+            <itemLink from="p53" to="p56" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="764.0" yPoint="874.4013474494707"/>
+                    <breakPointItem xPoint="884.0" yPoint="919.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l85">
+            <itemLink from="p53" to="p55" value="0" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="764.0" yPoint="874.4013474494707"/>
+                    <breakPointItem xPoint="884.0" yPoint="859.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l86">
+            <itemLink from="p1" to="p30" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="75.0" yPoint="390.0"/>
+                    <breakPointItem xPoint="225.0" yPoint="255.0"/>
+                    <breakPointItem xPoint="762.0" yPoint="255.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l87">
+            <itemLink from="p1" to="p53" value="6" session="s1">
+                <breakPoint link="full">
+                    <breakPointItem xPoint="75.0" yPoint="390.0"/>
+                    <breakPointItem xPoint="195.0" yPoint="870.0"/>
+                    <breakPointItem xPoint="764.0" yPoint="874.4013474494707"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l88">
+            <itemLink from="p31" to="p62" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="235" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="241.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="237.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="325.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l89">
+            <itemLink from="p32" to="p62" value="1" session="s1" measure="">
+                <blackBox posX="984" posY="272" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="279.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="274.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="325.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l90">
+            <itemLink from="p31" to="p35" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="145" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="151.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="147.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="145.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l91">
+            <itemLink from="p32" to="p35" value="4" session="s1" measure="">
+                <blackBox posX="984" posY="182" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="189.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="184.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="145.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l92">
+            <itemLink from="p33" to="p35" value="3" session="s1" measure="">
+                <blackBox posX="984" posY="220" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="300.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="226.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="222.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="145.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l93">
+            <itemLink from="p34" to="p35" value="3" session="s1" measure="">
+                <blackBox posX="984" posY="257" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="375.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="264.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="259.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="145.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l94">
+            <itemLink from="p31" to="p60" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="175" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="181.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="177.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="205.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l95">
+            <itemLink from="p32" to="p60" value="4" session="s1" measure="">
+                <blackBox posX="984" posY="212" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="219.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="214.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="205.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l96">
+            <itemLink from="p33" to="p60" value="3" session="s1" measure="">
+                <blackBox posX="984" posY="250" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="300.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="256.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="252.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="205.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l97">
+            <itemLink from="p34" to="p60" value="3" session="s1" measure="">
+                <blackBox posX="984" posY="287" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="375.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="294.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="289.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="205.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l98">
+            <itemLink from="p32" to="p61" value="1" session="s1" measure="">
+                <blackBox posX="984" posY="242" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="249.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="244.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="265.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l99">
+            <itemLink from="p31" to="p61" value="1" session="s1" measure="">
+                <blackBox posX="984" posY="205" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="211.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="207.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="265.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l100">
+            <itemLink from="p34" to="p61" value="4" session="s1" measure="">
+                <blackBox posX="984" posY="317" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="375.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="324.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="319.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="265.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l101">
+            <itemLink from="p33" to="p61" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="280" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="300.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="286.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="282.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="265.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l102">
+            <itemLink from="p34" to="p63" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="377" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="375.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="384.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="379.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="385.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l103">
+            <itemLink from="p33" to="p63" value="5" session="s1" measure="">
+                <blackBox posX="984" posY="340" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="300.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="346.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="342.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="385.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l104">
+            <itemLink from="p32" to="p63" value="2" session="s1" measure="">
+                <blackBox posX="984" posY="302" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="225.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="309.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="304.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="385.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l105">
+            <itemLink from="p31" to="p63" value="2" session="s1" measure="">
+                <blackBox posX="984" posY="265" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="897.0" yPoint="150.0"/>
+                    <breakPointItem xPoint="1017.5" yPoint="271.5"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="986.5" yPoint="267.5"/>
+                    <breakPointItem xPoint="1089.0" yPoint="385.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l106">
+            <itemLink from="p39" to="p64" value="5" session="s1" measure="">
+                <blackBox posX="1205" posY="516" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+        <link id="l107"/>
+        <link id="l108"/>
+        <link id="l109">
+            <itemLink from="p40" to="p65" value="5" session="s1" measure="">
+                <blackBox posX="1207" posY="591" width="5" height="5"/>
+                <breakPoint link="left">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+                <breakPoint link="right">
+                    <breakPointItem xPoint="10.0" yPoint="10.0"/>
+                    <breakPointItem xPoint="20.0" yPoint="20.0"/>
+                </breakPoint>
+            </itemLink>
+        </link>
+    </links>
+    <authors>
+        <author id="a1" name="Xavier Lacaze"/>
+        <author id="a2" name="Jean-Luc Vinot"/>
+        <author id="a3" name="Christelle Farenc"/>
+    </authors>
+</diagram>
