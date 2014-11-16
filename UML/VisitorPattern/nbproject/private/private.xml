@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/C:/Users/rbastide/Documents/Enseignement/Java/Patterns/Visitor/netbeans/VisitorPattern/src/visitorpattern/Main.java</file>
-        <file>file:/C:/Users/rbastide/Documents/Enseignement/Java/Patterns/Visitor/netbeans/VisitorPattern/src/visitorpattern/HTMLPrinter.java</file>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/HayesModem.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/HTMLPrinter.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/MyModem.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/Main.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/ZoomModem.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/ModemVisitor.java</file>
+            <file>file:/C:/cygwin64/home/arnaud/M2-IHM/UML/VisitorPattern/src/visitorpattern/LinuxConfigurator.java</file>
+        </group>
     </open-files>
 </project-private>

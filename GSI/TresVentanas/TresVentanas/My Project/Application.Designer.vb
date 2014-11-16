@@ -14,10 +14,10 @@ Option Explicit On
 
 Namespace My
     
-    'NOTE: This file is auto-generated; do not modify it directly.  To make changes,
-    ' or if you encounter build errors in this file, go to the Project Designer
-    ' (go to Project Properties or double-click the My Project node in
-    ' Solution Explorer), and make changes on the Application tab.
+    'REMARQUE : ce fichier étant généré automatiquement, ne le modifiez pas directement. Pour apporter des modifications,
+    ' ou si vous rencontrez des erreurs de build dans ce fichier, accédez au Concepteur de projets
+    ' (allez dans les propriétés du projet ou double-cliquez sur le noeud My project dans
+    ' l'Explorateur de solutions), puis apportez vos modifications sous l'onglet Application.
     '
     Partial Friend Class MyApplication
         
@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.TresVentanas.Form1
+            Me.MainForm = Global.TresVentanas.SplashScreen1
         End Sub
     End Class
 End Namespace

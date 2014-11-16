@@ -1,0 +1,10 @@
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\bin\Debug\TresVentanas.exe
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\bin\Debug\TresVentanas.pdb
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\bin\Debug\TresVentanas.xml
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Form1.resources
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Resources.resources
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.SplashScreen1.resources
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.vbproj.GenerateResource.Cache
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.exe
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.xml
+C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.pdb
