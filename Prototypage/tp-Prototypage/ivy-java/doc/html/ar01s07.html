@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Utilities</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s06.html" title="Advanced functions"/><link rel="next" href="ar01s08.html" title="programmer's style guide"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Utilities</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s06.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N40295"/>Utilities</h2></div></div></div>
+        
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4029A"/>jprobe</h3></div></div></div>
+            
+            <p>
+jprobe is your swiss army knife as an Ivy Java developer. Use it
+to try your regular expressions, to check the installation of the system, to
+log the messages, etc. To use it, either run <span class="command"><strong>java
+fr.dgac.ivy.tools.Probe</strong></span>
+                , run the jar file directly with <span class="command"><strong>$ java -jar ivy.jar</strong></span>
+                , or use the jprobe shell script.
+</p>
+            <p>
+The command line options ( available with the -h command line switch ) are the
+following:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>
+-b allows you to specify the ivy bus. This overrides the -DIVY_BUS
+Java property. The default value is 127.255.255.255:2010.
+</p>
+                    </li><li class="listitem">
+                        <p>
+-n NAME allows you to specify the name of this probe agent on the bus. It
+defaults to JPROBE, but it might be difficult to differentiate which jprobe
+sent which message with a handful of agents with the same name
+</p>
+                    </li><li class="listitem">
+                        <p>
+-q allows you to spawn a silent jprobe, with no terminal output
+</p>
+                    </li><li class="listitem">
+                        <p>
+-s sends to self ( default off ), allows subscription to its own messages
+</p>
+                    </li><li class="listitem">
+                        <p>
+-n NEWNAME changes JPROBE default Ivy name to another one, which can prove to
+be useful when running different probes
+</p>
+                    </li><li class="listitem">
+                        <p>
+-t add timestamps to messages
+</p>
+                    </li><li class="listitem">
+                        <p>
+-d allows you to use JPROBE on debug mode. It is the same as setting the
+VY_DEBUG property ( java -DIVY_DEBUG fr.dgac.ivy.tools.Probe is the same as java
+fr.dgac.ivy.tools.Probe -d )
+</p>
+                    </li><li class="listitem">
+                        <p>
+-c MESSAGECLASS uses a message filter (see <code class="function">Ivy.setFilter()</code>
+                            ), for example
+'Word1,Word2,Word3'
+</p>
+                    </li><li class="listitem">
+                        <p>
+-h dumps the command line options help.
+</p>
+                    </li></ul></div><p>
+            </p>
+            <p>
+The run time commands are preceded by a single dot (.) at the beginning of the
+line. Issue ".help" at the prompt ( without the double quotes ) to have the
+list of available commands. If the lines does not begin with a dot, jprobe tries
+to send the message to the other agents, if their subscriptions allows it. The
+dot commands are the following
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>
+.die CLIENTNAME issues an ivy die command, presumably forcing the first agent
+with this name to leave the bus
+</p>
+                    </li><li class="listitem">
+                        <p>
+.bye (or .quit) forces the JPROBE application to exit. This is the same as inputting an end of file character on a single input line ( ^D ).
+</p>
+                    </li><li class="listitem">
+                        <p>
+.direct client id message sends the direct message to the remote client, using
+the numeric id
+</p>
+                    </li><li class="listitem">
+                        <p>
+.bind REGEXP and .unbind REGEXP will change Probe's subscription
+</p>
+                    </li><li class="listitem">
+                        <p>
+.list gives the list of clients seen on the ivy bus
+</p>
+                    </li><li class="listitem">
+                        <p>
+.bound AGENT lists the regexps the AGENT has subscribed to. You can use .bound
+* to get the whole list.
+</p>
+                    </li><li class="listitem">
+                        <p>
+.time COUNT MSG sends the MSG COUNT times and displays the elapsed time
+</p>
+                    </li><li class="listitem">
+                        <p>
+.ping CLIENT measures the time it takes to reach a client
+</p>
+                    </li></ul></div><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4031E"/>IvyDaemon</h3></div></div></div>
+            
+            <p>
+As the launching and quitting of an ivy bus is a bit slow, it is not
+convenient to spawn an Ivy client each time we want to send a simple message.
+To do so, we can use the IvyDaemon, which is a TCP daemon sitting and waiting
+on the port 3456, and also connected on the default bus. Each time a remote
+application connects to this port, every line read until EOF will be forwarded
+on the bus. The standard port and bus domain can be overridden by command line
+switches ( use <span class="command"><strong>$ java fr.dgac.ivy.tools.IvyDaemon -h</strong></span>
+                 ).
+First, spawn an ivy Damon: <span class="command"><strong>$ java fr.dgac.ivy.tools.IvyDaemon</strong></span>
+                
+then, within your shell scripts, use a short TCP connexion ( for instance
+netcat ): <span class="command"><strong>$ echo "hello world" | nc -q 0 localhost 3456</strong></span>
+                
+The "hello world" message will be sent on the default Ivy Bus to anyone having
+subscribe to a matching pattern
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40330"/>jafter</h3></div></div></div>
+            
+            <p>
+jafter ( or fr.dgac.ivy.tools.JAfter ) is a simple utility that can be used
+within shell script. The rationale is to block the processing until a specific
+message is received, then continue. This can be used to wait for a ready
+message before lauching another agent. The jafter program can wait forever or
+timeout. It the timeout is triggered, a negative value is returned to the
+shell.
+</p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s06.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s08.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Advanced functions </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> programmer's style guide</td></tr></table></div></body></html>

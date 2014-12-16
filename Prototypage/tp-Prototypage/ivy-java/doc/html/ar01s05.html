@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Basic functions</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s04.html" title="Your first Ivy application"/><link rel="next" href="ar01s06.html" title="Advanced functions"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Basic functions</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s04.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s06.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N40107"/>Basic functions</h2></div></div></div>
+        
+        <p>
+The javadoc generated files are available on line on the ivy web site, and should be included in your ivy-1.2.14.jar java package (or in /usr/share/doc/libivy-java, alongside with this very manual, if you used a debian package). Here are more details on those functions.
+</p>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4010F"/>Initialization an Ivy object and joining the bus</h3></div></div></div>
+            
+            <p>
+Initializing a Java Ivy agent is a two step process. First of all, you must
+create an <code class="function">fr.dgac.ivy.Ivy</code>
+                 object. It will be the
+repository of your agent name, network state, subscriptions, etc. Once this object is
+created, you can subscribe to the various Ivy events: text messages through
+Perl compatible regular expressions, other agents' arrival, departure,
+subscription or unsubscription to regexps, direct messages or die command
+issued by other agents.
+</p>
+            <p>
+At this point, your application is still not connected. In
+order to join the bus, call the <code class="function">start(string domain)</code>
+                 method on
+your Ivy object. This will spawn two threads that will remain active until you
+call the <code class="function">stop()</code>
+                 method on your Ivy object or until some
+other agent sends you a die message. Once this <code class="function">start()</code>
+                 method has been called,
+the network machinery is set up according to the ivy protocol, and your agent
+is eventually ready to handle messages on the bus.
+</p><pre class="programlisting">
+fr.dgac.ivy.Ivy(String name,String message, IvyApplicationListener appcb)
+</pre><p>
+                
+This constructor readies the structures for the software bus connexion. It is
+possible to have more than one bus at the same time in an application, be it on
+the same ivy broadcast address or one different ones. The <em class="parameter"><code>name</code></em> is
+the name of the application on the bus, and will by transmitted to other
+application, and possibly be used by them (through <code class="function">String IvyClient.getApplicationName()</code>).
+The <em class="parameter"><code>message</code></em> is the first message that will be sent to  other applications, when connected. This is a slightly different broadcasting scheme than the normal one ( see <em class="citetitle">The Ivy
+architecture and protocol</em> document for more information. If <em class="parameter"><code>message</code></em> is null, nothing will be sent. Usually, other application subscribe to this ready message to trigger actions depending on the presence of your agent on the bus. The <em class="parameter"><code>appcb</code></em> is an object
+implementing the IvyApplicationListener interface. Its different methods
+are called upon arrival or departure of other agents on the bus, or when your
+application itself leaves the bus, or when a direct message is sent to your
+application. It is also possible to add or remove other application listeners
+using the <code class="function">Ivy.AddApplicationListener()</code> and
+<code class="function">Ivy.RemoveApplicationListener()</code> functions.
+
+</p><pre class="programlisting">
+public void start(String domainbus) throws IvyException
+</pre><p>
+                
+This method connects the Ivy bus to a domain or list of domains. This spawns network managing threads that will be stropped with <code class="function">Ivy.stop()</code> or when a die message is received.
+
+You're invited to let the domainbus set to null, and to use JVM parameters to choose the bus you will connect to. The rendezvous point is the String parameter <em class="parameter"><code>domainbus</code></em> , an
+UDP broadcast address like "10.0.0:1234" (255 are added at the end to become an
+IPv4 UDP broadcast address). This will determine the meeting point of the different
+applications. For the gory details, this is done with an UDP broadcast or an
+IP Multicast, so beware of routing problems ! You can also use a comma separated
+list of domains, for instance "10.0.0.1234,192.168:3456". If the domain is
+<em class="parameter"><code>null</code></em> , the API will check for the property
+<em class="parameter"><code>IVY_BUS</code></em> (set at the invocation of the JVM, e.g $
+java -DIVY_BUS=10:4567 myApp, or via an environment variable on older JVMs);
+if not present, it will use the default bus, which is 127.255.255.255:2010.
+
+The default address requires a broadcast enabled loopback interface to be
+active on your system (CAUTION, on MacOSX and some releases of SunOS, the
+default bus doesn't work ...). If an IvyException is thrown, your application
+is not able to send or receive data on the specified domain. 
+
+</p><pre class="programlisting">
+public void stop() 
+</pre><p>
+                
+This methods stops the threads, closes the sockets and performs some clean-up.
+If there is no other thread running, the program quits. This is the preferred
+way to quit a program within a callback (please don't use
+<code class="function">System.exit()</code> before
+having stopped the bus, even if it works ... ). Note that it is still
+possible to reconnect to the bus by calling <code class="function">start()</code> once
+again.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4015A"/>Emitting messages</h3></div></div></div>
+            
+            <p>
+Emitting a message is much like echoing a string on a output channel. Portion
+of the message will be sent to the connected agent if the message matches
+their subscriptions.
+</p><pre class="programlisting">
+public int sendMsg(String message) 
+</pre><p>
+                
+Will send each remote agent the substrings in case there is a regexp matching.
+The default behaviour is not to send the message to oneself !
+The result is the number of messages actually sent. The main issue here is
+that the sender ivy agent is the one who takes care of the regexp matching, so
+that only useful information are conveyed on the network. Be sure that the
+message sent doesn't contains protocol characters: 0x01 to 0x08 and
+unfortunately 0x0D, the newline character. If you want to send newlines, see
+protectNewline, in advanced functions.
+
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40166"/>Subscription to messages</h3></div></div></div>
+            
+            <p>
+Subscribing to messages consists in binding a callback function to a message pattern.
+Patterns are described by regular expressions with captures. Since ivy-java
+1.2.4, Perl Compatible Regular Expressions are used, with the Apache Jakarta
+Project regexp library (see the <a class="ulink" href="http://jakarta.apache.org/regexp/" target="_top">jakarta regexp
+web site</a>
+                ). When a message matching the regular expression is detected
+on the bus (the matching is done at the sender's side), the recipient's callback function is
+called. The captures (ie the bits of the message that match the parts of regular expression
+delimited by brackets) are passed to the callback function much like options are passed to main.
+Use the <code class="function">bindMsg()</code>
+                 method to bind a callback to a pattern, and the
+<code class="function">unbindMsg</code>
+                 method to delete the binding.
+</p><pre class="programlisting">
+public int bindMsg(String regexp, IvyMessageListener callback);
+public void unBindMsg(int id);
+</pre><p>
+                
+The <em class="parameter"><code>regexp</code></em>
+                 follows the PCRE syntax (see the <a class="ulink" href="http://www.pcre.org/" target="_top"> pcre web site</a>
+                 or the pcrepattern(3) man
+page), grouping is done with brackets. The <em class="parameter"><code>callback</code></em>
+                
+is an object implementing the IvyMessageListener interface, with the <code class="function">receive</code>
+                
+method. The thread listening on the connexion with the sending agent will execute the callback.
+</p>
+            <p>
+There are two ways of defining the callback: the first one is to make an
+object an implementation of the IvyMessageListener interface, and to implement
+the <code class="function">public void receive(Ivyclient ic, String[] args)</code>
+                
+method. But this is limited to one method per class, so the second method used
+is the one of anonymous inner classes, introduced since Java 1.1 and widely used in
+swing programs, for instance:
+</p><pre class="programlisting">
+bindMsg("^a*(.*)c*$", new IvyMessageListener() {
+  public void receive(IvyClient ic,String[] args) {
+    ... // do some stuff
+  }
+});
+</pre><p>
+                
+The processing of the ivy protocol and the execution of the callback are
+performed within an unique thread per remote client. Thus, the callback will
+be performed sequentially. If you want an asynchronous handling of callbacks,
+see in the advanced functions.
+
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40192"/>Subscribing to application events</h3></div></div></div>
+            
+            <p>
+Either at the creation time of your <code class="function">Ivy</code>
+                 object or later
+on with <code class="function">Ivy.addApplicationListener()</code>
+                , you can add add
+some behaviour to perform callbacks upon different events:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>when an agent joins the bus</p>
+                    </li><li class="listitem">
+                        <p>when an agent leaves the bus</p>
+                    </li><li class="listitem">
+                        <p>when an agent sends you a direct message</p>
+                    </li><li class="listitem">
+                        <p>when an agent forces you to leave the bus</p>
+                    </li></ul></div><p>
+                
+This can be handy if you design an agent requiring somme coordination with
+other dedicated agents to run properly. To do so, the easiest way is to use
+the ready messages. You can find later a description of the <code class="function">Ivy.waitForClient()</code>
+                 method to implement a correct synchronization.
+</p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s04.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s06.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Your first Ivy application </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> Advanced functions</td></tr></table></div></body></html>

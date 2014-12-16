@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Advanced functions</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s05.html" title="Basic functions"/><link rel="next" href="ar01s07.html" title="Utilities"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Advanced functions</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s05.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N401C0"/>Advanced functions</h2></div></div></div>
+        
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N401C5"/>Sending to self</h3></div></div></div>
+            
+            <p>
+By default, an application doesn't send the messages to itself. Usually, there
+are more efficient and convenient ways to communicate withing a program.
+However, if you want to take benefit of the ease of Ivy or to be as
+transparent as possible, you can set the Ivy object so that the pattern
+matching and message sending will be done for the sender too.
+</p><pre class="programlisting">
+public void sendToSelf(boolean b);
+public boolean isSendToSelf();
+</pre><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N401D1"/>Initializing a domain</h3></div></div></div>
+            
+            <p>
+The default behaviour of an Ivy agent is to accept a command line switch ( -b
+10:2010, e.g. ), and if not present, to use the IVYBUS property, ( given by the
+-DIVYBUS=10:34567 parameter to the jvm ), and, if not present, to default to
+Ivy.DEFAULT_DOMAIN. This domain is given as a string ardument to the
+Ivy.start() function. To make this logic easier to follow, the Ivy class
+provides the programmer with two useful function:
+</p><pre class="programlisting">
+public static String getDomain(String arg);
+public static String getDomainArgs(String progname,String[] args);
+</pre><p>
+                
+The <code class="function">Ivy.getDomain()</code>
+                 function, if arg is non null, will return arg, otherwise it
+will return the IVYBUS property, otherwise the DEFAULT_DOMAIN. A very simple
+way to start an Ivy agent is with
+<code class="function">Ivy.start(getDomain(null))</code>
+                . The
+getDomainArgs(name,args) will add very simple processing of the args given to
+the main() function, and give higher priority to the command line argument.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N401E3"/>Newline within messages</h3></div></div></div>
+            
+            <p>
+As we have seen in <code class="function">Ivy.sendMsg()</code>
+                , you can not have
+newline characters within the string you send on the bus. If you still want to
+send messages with newline, you can encode and decode them at the emitter and
+receiver's side. With <span class="command"><strong>Ivy.protectNewLine(boolean b)</strong></span>
+                , you can set your
+Ivy object to ensure encoding and decoding of newlines characters. This is tested
+and working between Java ivy applications, but not yet implemented in other
+ivy libraries. The newlines are replaced by ESC characters ( hex 0x1A ). As
+the encoding and decoding cost a little more CPU and is not yet standardised
+in the Ivy protocol, use it at your own risk. We should of course protect the
+other protocol special characters.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N401F2"/>Sending direct messages</h3></div></div></div>
+            
+            <p>
+Direct messages is an ivy feature allowing the exchange of information between
+two ivy clients. It overrides the subscription mechanism, making the exchange
+faster ( there is no regexp matching, etc ). However, this features breaks the
+software bus metaphor, and should be replaced with the relevant bounded.
+regexps, at the cost of a small CPU overhead. The full direct message
+mechanism in Java has been made available since the ivy-java-1.2.3, but it
+won't be much documented, in order to make it harder to use.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N401FB"/>Ivy and swing GUI</h3></div></div></div>
+            
+            <p>
+Swing requires the code to run in the main swing thread. In order to avoid
+problems, be sure tu use the SwingUtilities.invokeLater() or
+SwingUtilities.invokeAndWait() methods if you Ivy callbacks impact swing
+components.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40204"/>Asynchronous Subscription to messages</h3></div></div></div>
+            
+            <p>
+For each and every remote agent on the bus, a thread is in charge of handling the encoding
+and decoding of the messages and of the execution of the callbacks. Thus, if a
+callback consumes much time, the rest of the communication is put on hold and
+the processing is serialised, eventually leading to a stacking in the socket
+buffer and to the blocking of the message sender. To alleviate this, we have
+set up (since 1.2.4) an asynchronous subscription, where each and every
+time a callback is performed, it is done in a newly created separate thread.
+As creating a thread is quite expensive, one should use this method for
+lengthy callbacks only. Furthermore, to avoid concurrent access to the
+callback data, the String[] argument passed on to the callbacks are cloned.
+This causes an extra overhead.
+</p><pre class="programlisting">
+public int bindMsg(String regexp, IvyMessageListener callback,boolean async);
+public int bindAsyncMsg(String regexp, IvyMessageListener callback);
+</pre><p>
+                
+If the <em class="parameter"><code>async</code></em>
+                 boolean parameter is set to true, a new
+thread will be created for each callback. The same
+<code class="function">unBindMsg()</code>
+                 can be called to cancel a subscription.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40216"/>Waiting for someone: waitForClient and waitForMsg</h3></div></div></div>
+            
+            <p>
+Very often, while developing an Ivy agent, you will be facing the need of the
+arrival of another agent on the bus to perform your task correctly. For
+instance, for your spiffy application to run, a gesture recognition engine
+will have to be on the bus, or another data sending application. The Ivy way
+to do this is to subscribe to the known agent's <em class="parameter"><code>ready
+message</code></em>
+                 (be sure to subscribe before starting the
+bus), or to implement an IvyApplicationListener and change of state in the
+<code class="function">connect()</code>
+                 method. However, it is often useful to stop and
+wait, and it is awkward to wait for a variable change.
+</p><pre class="programlisting">
+IvyClient waitForClient(String name, int timeout)
+IvyClient waitForMsg(String regexp, int timeout) 
+</pre><p>
+                
+These two methods allow you to stop the flow of your main (or other) thread
+by waiting for the arrival of an agent, or for the arrival of a message. If
+the agent is already here, <code class="function">waitForClient</code>
+                 will return
+immediately. If <em class="parameter"><code>timeout</code></em>
+                 is set to null, your thread can
+wait "forever", otherwise it will wait <em class="parameter"><code>timeout</code></em>
+                
+milliseconds. With <code class="function">waitForMsg</code>
+                , be aware that your subscription can be
+propagated to the remote agents after that their message was sent, so that
+you'd wait for nothing. You had better be sure that the
+<code class="function">waitForMsg</code>
+                 method is called early enough.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40237"/>Subscribing to subscriptions</h3></div></div></div>
+            
+            <p>
+A very common practice when beginning to play with ivy is to develop an ivy
+agent monitor (the good practice is to use the excellent ivymon written in
+perl by Daniel Etienne). If you want to notity the user that a remote agent
+has subscribed or unsubscribed to a regular expression after the
+protocol handshake, then your monitor agent has to subscribe to subscriptions.
+To do so, use the following functions:
+</p><pre class="programlisting">
+public int addBindListener(IvyBindListener callback);
+public void	 removeBindListener(int id)
+</pre><p>
+                
+A <code class="function">IvyBindListener</code>
+                 object must implement the following
+interface:
+</p><pre class="programlisting">
+void bindPerformed(IvyClient client, int id, String regexp);
+void unbindPerformed(IvyClient client, int id, String regexp);
+</pre><p>
+                
+For a code sample, see the Probe utility source code. Note that if you have
+enabled a filter (message classes), you will be notified the subscriptions
+even if they are considered useless. If you want to check if the regexp has a
+chance to match the message you're sending, use the
+<code class="function">boolean Ivy.CheckRegexp(String regexp)</code>
+                .
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4024C"/>Monitoring the bus</h3></div></div></div>
+            
+            <p>
+When in doubt, to check if the remote client is still responding, instead of
+relying on a callback, you can test the response of the protocol parsing
+thread. Use following method:
+</p><pre class="programlisting">
+Ivyclient.ping(PingCallback pc);
+</pre><p>
+                
+It will send a ping token that will (hopefully) be parsed by the remote agent,
+and will trigger the following message with the elapsed time in milliseconds:
+</p><pre class="programlisting">
+void PingCallback.pongReceived(IvyClient ic,int elapsedTime);
+</pre><p>
+                
+An example is provided in fr.dgac.ivy.tools.Probe.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4025B"/>Message classes</h3></div></div></div>
+            
+            <p>
+When your Ivy bus is populated with many agents, the cost of pattern matching
+becomes painful. For instance, a bus with 20+ agents, with 2000+
+subscriptions, with hundreds of messages per second might cause a high CPU
+load, thus leading to slow responsiveness in GUI animations. To limit this
+phenomenon, use bounded regexp as much as possible like <code class="function">^NAME
+VALUE=(.*)</code>
+                 ( see the programmer's style guide later on ). However,
+2000+ subscription are still 2000+ tests of bounded regexp, even if is less
+costful. It is possible not to do the tests provided some requirements are
+met:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>your agent knows exhaustively and exactly the prefixes of all
+the messages it will send</p>
+                    </li><li class="listitem">
+                        <p>your use the <code class="function">Ivy.setFilter()</code>
+                             before
+starting the bus, with the list of prefixes ( e.g.: { "TOTO1" "PREFIX", "ETC"
+} ) </p>
+                    </li></ul></div><p>
+            </p>
+            <p>
+If you use the message classes, your Ivy agent will ignore the bounded subscriptions
+of other agents that will never match any of your prefixes ( e.g: ^COUCOU
+neither matches TOTO1,  PREFIX, nor ETC ). The check is made this way:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>if the regexp is bounded, the filter extracts the first word
+according to this regexp: <code class="function">^\\^([a-zA-Z0-9_-]+).*</code>
+                        </p>
+                    </li><li class="listitem">
+                        <p>the word is compared character to character to all the
+prefixes in the message class; if it is not present, the subscription is
+discarded</p>
+                    </li></ul></div><p>
+            </p>
+            <p>
+When your agent sends a message, many pattern matching won't be made, and it
+might save some time. Be sure to activate the <code class="function">setFilter()</code>
+                
+when you are sure that you know perfectly the message classes. You can play
+with the message classes with jprobe and see the problems that can arise.
+</p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s05.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s07.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Basic functions </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> Utilities</td></tr></table></div></body></html>

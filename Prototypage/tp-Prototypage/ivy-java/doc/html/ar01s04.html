@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Your first Ivy application</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s03.html" title="The Ivy Java library"/><link rel="next" href="ar01s05.html" title="Basic functions"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Your first Ivy application</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s03.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N400BC"/>Your first Ivy application</h2></div></div></div>
+        
+        <p>
+We are going to write a "Hello world translater" for an Ivy bus. The application will
+subscribe to all messages starting with the "Hello" string, and re-emit them
+on the bus having translated "Hello" into "Bonjour" (Hello in french).
+In addition, the application will quit as soon as it receives a "Bye" message.
+</p>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N400C4"/>The code</h3></div></div></div>
+            
+            <p>
+Here is the code of "ivyTranslater.java":
+</p><pre class="programlisting">
+import fr.dgac.ivy.* ;
+
+class ivyTranslater implements IvyMessageListener {
+
+  private Ivy bus;
+
+  ivyTranslater() throws IvyException {
+    // initialization, name and ready message
+    bus = new Ivy("IvyTranslater","IvyTranslater Ready",null);
+    // classical subscription
+    bus.bindMsg("^Hello(.*)",this);
+    // inner class subscription ( think awt )
+    bus.bindMsg("^Bye$",new IvyMessageListener() {
+      public void receive(IvyClient client, String[] args) {
+	// leaves the bus, and as it is the only thread, quits
+        bus.stop();
+      }
+    });
+    bus.start(null); // starts the bus on the default domain
+  }
+
+  // callback associated to the "Hello" messages"
+  public void receive(IvyClient client, String[] args) {
+    try {
+      bus.sendMsg("Bonjour"+((args.length&gt;0)?args[0]:""));
+    } catch (IvyException ie) {
+      System.out.println("can't send my message on the bus");
+    }
+  }
+
+  public static void main(String args[]) throws IvyException {
+    new ivyTranslater();
+  }
+}
+</pre><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N400D0"/>Compiling it</h3></div></div></div>
+            
+            <p>
+You should be able to compile the application with the
+following command (the classpath may vary):
+</p><pre class="screen">
+$ <strong class="userinput"><code>javac -cp ivy-java.jar ivyTranslater.java</code></strong>
+                </pre><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N400DF"/>Testing</h3></div></div></div>
+            
+            <p>
+We are going to test our application with <span class="command"><strong>fr.dgac.ivy.tools.Probe</strong></span>.
+In a shell, launch ivyTranslater:
+</p><pre class="screen">
+$ <strong class="userinput"><code>java -cp .:ivy-java.jar ivyTranslater</code></strong>
+</pre><p>
+                
+In another shell, launch <span class="command"><strong>java fr.dgac.ivy.tools.Probe '(.*)'</strong></span>
+                .
+You can see that the IvyTranslater has joined the bus, published its
+subscriptions, and sent the mandatory ready message. As your probe has
+subscribed to the eager regexp .* and reports the matched string within the
+brackets (.*), the ready message is printed.
+
+</p><pre class="screen">
+$ <strong class="userinput"><code>java fr.dgac.ivy.tools.Probe '(.*)'</code></strong>
+                    
+you want to subscribe to (.*)
+broadcasting on 127.255.255.255:2010
+IvyTranslater connected
+IvyTranslater subscribes to ^Bye$
+IvyTranslater subscribes to ^Hello(.*)
+IvyTranslater sent 'IvyTranslater Ready'
+</pre><p>
+                
+
+Probe is an interactive program. Type "Hello Paul", and you should receive "Bonjour Paul".
+Type "Bye", and the ivyTranslater application should quit to the shell. Just
+quit Probe, issuing a Control-D ( or .quit ) on a line, and Probe exists to
+the shell.
+</p><pre class="screen">
+                    <strong class="userinput"><code>Hello Paul</code></strong>
+                    
+-&gt; Sent to 1 peers
+IvyTranslater sent 'Bonjour Paul'
+<strong class="userinput"><code>Bye</code></strong>
+                    
+-&gt; Sent to 1 peers
+IvyTranslater disconnected
+<strong class="userinput"><code>&lt;Ctrl-D&gt;</code></strong>
+                    
+$
+</pre><p>
+            </p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s03.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s05.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">The Ivy Java library </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> Basic functions</td></tr></table></div></body></html>

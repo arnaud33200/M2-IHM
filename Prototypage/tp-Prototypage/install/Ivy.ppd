@@ -1,0 +1,9 @@
+<SOFTPKG NAME="Ivy" VERSION="4,10,0,0">
+    <TITLE>Ivy</TITLE>
+    <ABSTRACT>ivy bus for PERL</ABSTRACT>
+    <AUTHOR>Equipe PII/CENA (pii@cena.fr)</AUTHOR>
+    <IMPLEMENTATION>
+        <OS NAME="MSWin32" />
+        <CODEBASE HREF="Ivy-4.10-PPM.tar.gz" />
+    </IMPLEMENTATION>
+</SOFTPKG>

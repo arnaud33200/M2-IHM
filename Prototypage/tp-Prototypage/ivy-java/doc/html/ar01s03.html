@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>The Ivy Java library</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s02.html" title="What is Ivy?"/><link rel="next" href="ar01s04.html" title="Your first Ivy application"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">The Ivy Java library</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s02.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s04.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N40069"/>The Ivy Java library</h2></div></div></div>
+        
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4006E"/>What is it?</h3></div></div></div>
+            
+            <p>
+The Ivy Java library (aka fr.dgac.ivy) is a Java package that
+allows you to connect applications to an Ivy bus. 
+You can also use it to connect any Java
+application to an Ivy bus. So far, this library has been tested and used on a variety of
+Java virtual machines (from 1.1.7 to 1.6.0), a variety of vendors (kaffe+gcj,
+sun jdk, blackdown) and on a variety of architectures (GNU/Linux, Solaris,
+Windows NT,XP,2000, MacOSX). It used to be developped and maintained on a Debian
+GNU/Linux ox, but the maintainer got lazy, and enjoys a MacOSX snow leopard powered macbook.
+</p>
+            <p>
+The Ivy Java library was originally developed by FranÃ§ois-RÃ©gis Colin and 
+Yannick Jestin within a group at CENA (Toulouse, France). It is now maintained
+by Yannick.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4007A"/>Getting and installing the Ivy Java library</h3></div></div></div>
+            
+            <p>You can get the latest versions of the Ivy Java library from <a class="ulink" href="http://www.tls.cena.fr/products/ivy/" target="_top">the Ivy web site</a>. It is packaged either as a jar file or as a debian package. We plan to package it according to different distribution formats, such as .msi (Windows) .deb or .rpm package (Debian, Redhat and Mandrake linux). Contributors are welcome for package management.</p>
+
+            <p>For most people, the simplest way is to install the
+	      ivy-java.jar jar file, containing both ivy java and its
+	      gnu.getopt dependancy. There are many ways to use this file:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>(preferred solution) put it in the command line each time you want to use it, as a -classpath ivy-java.jar parametery</p></li><li class="listitem"><p>add its location in your CLASSPATH environment variable,</p></li><li class="listitem"><p>Linux: put the it in your $JAVA_HOME/jre/lib/ext/ directory,</p></li><li class="listitem"><p>Windows: put it in the right place, perhaps C:\Program Files\JavaSoft\...,</p></li><li class="listitem"><p>MacOSX: put it ~/Library/Java/Extensions , or system wide,</p></li><li class="listitem"><p>Eclipse, Netbeans: add it to your project,</p></li></ul></div><p>
+            </p>
+            <p>
+The numbered packages (ivy-1.2.14.jar ivy-1.2.14.tar.gz) also contain documentation, sources code alongside with examples and a small set of tools (IvyDaemon, jprobe, jafter). You may need to install the <a class="ulink" href="http://www.urbanophile.com/arenn/coding/download.html" target="_top">gnu getopt library</a>, included in the jar file  but not in the debian package.
+</p>
+            <p>
+In order to test the presence of Ivy jar on your system once installed, run the following command: 
+</p><pre class="screen">
+<strong class="userinput"><code>$ java fr.dgac.ivy.tools.Probe</code></strong>
+</pre><p>
+                
+If should display a line about broadcasting on a strange address, this is OK
+and means it is ready and working. If it complains about a missing class (
+java.lang.NoClassDefFoundError ), then you have not pointed your virtual
+machine to the jar file or your installation is incomplete.
+Alternatively, you can use the jprobe shell script.
+</p><pre class="screen">
+<strong class="userinput"><code>$ jprobe</code></strong>
+</pre><p>
+            </p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s02.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s04.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">What is Ivy? </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> Your first Ivy application</td></tr></table></div></body></html>

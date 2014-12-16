@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title>programmer's style guide</title><meta content="DocBook XSL Stylesheets V1.78.1" name="generator"/><link rel="home" href="index.html" title="The Ivy Java library guide"/><link rel="up" href="index.html" title="The Ivy Java library guide"/><link rel="prev" href="ar01s07.html" title="Utilities"/><link rel="next" href="ar01s09.html" title="Contacting the authors"/></head><body><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">programmer's style guide</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s07.html">Prev</a> </td><th align="center" width="60%"> </th><td align="right" width="20%"> <a accesskey="n" href="ar01s09.html">Next</a></td></tr></table><hr/></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="N4033A"/>programmer's style guide</h2></div></div></div>
+        
+        <p>
+There are many specific programming patterns in Ivy. Some of them are Ivy
+related, some are java related. See the jprobe source code to get an example
+of some programming patterns. Here are some of them, to be completed later...
+</p>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40342"/>join the right bus</h3></div></div></div>
+            
+            <p>
+To join the right bus, you have to honor the IVYBUS property. It is a good way
+to let the system get it, and an ever better way to override it with command
+line options (e.g.: -b :3110). Here is a snippet to perform this task:
+</p><pre class="programlisting">
+import fr.dgac.ivy.* ;
+import gnu.getopt.Getopt;
+
+public static void main(String[] args) throws IvyException {
+    Getopt opt = new Getopt("After",args,"b:"); // add more options ...
+    String domain=Ivy.getDomain(null); // gets IVYDOMAIN from property
+    // or, if none is set, defaults to Ivy.DEFAULT_DOMAIN
+    while ((c = opt.getopt()) != -1) switch (c) {
+      case 'b': domain=opt.getOptarg(); break; // overrides
+      // and more options
+      default: System.out.println(helpmsg); System.exit(0);
+    }
+    Ivy bus=new Ivy(name,name+" ready",null);
+    bus.start(domain); // sets the properties for children processes ...
+}
+</pre><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4034E"/>nice regular expressions</h3></div></div></div>
+            
+            <p>
+To avoid CPU consuming pattern matching operation, be sure to use bounded
+regexps as much as possible. For instance, if we consider the regexp1 "^coord
+x=(\d+)", the regexp2 "x=(\d+)" and the message msg "coord x=12 y=15". When
+another agent sends the message msg, both regexp will match and trigger the
+callback with on argument, the string "12". However, when another message is
+sent, the regexp1 will fail as soon as possible, probably the very first
+character, but the regexp2 will do some processing before failing.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40357"/>Something's not working</h3></div></div></div>
+            
+            <p>
+To trace the behaviour of an heavily multithread application is quite tedious,
+especially when it's connected to others. The easiest path is to use the
+built-in basic tracing mechanism provided by Ivy : run your jvm with the
+-DIVY_DEBUG property set. Use jprobe to monitor what's going on with the
+greedy regexp '(.*)' in a separate terminal. If in doubt, just join the Ivy mailing
+list.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N40360"/>time consuming callbacks</h3></div></div></div>
+            
+            <p>
+For each remote agent, the Ivy object has an IvyClient with a dedicated
+working thread. This thread deals with the Ivy protocol coding and decoding,
+and performs the callbacks. If your agent has time consuming callbacks,
+involving CPU, or long IO, or so, then it might be better to run each callback
+in a dedicated thread. You can write this yourself, or just use the
+<code class="function">Ivy.bindAsyncMsg()</code>
+                 function. The problem is that there is
+a slight overhead in thread management.
+</p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N4036C"/>how to perform requests</h3></div></div></div>
+            
+            <p>
+When agent A needs to make a request to another agent B, you
+can use the following pattern:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <p>B has subscribed to ^MyRequest ID=([^ ]+) QUERY=(.*)</p>
+                    </li><li class="listitem">
+                        <p>A subscribes to ^MyResult ID=someSpecificId RESULT=(.*)</p>
+                    </li><li class="listitem">
+                        <p>A send to MyRequest ID=someSpecificId QUERY=2+2</p>
+                    </li><li class="listitem">
+                        <p>B receives, computes the results, then sends MyResult ID=someSpecificId RESULT=4</p>
+                    </li><li class="listitem">
+                        <p>A receives, and unsubscribes to his subscription</p>
+                    </li></ul></div><p>
+            </p>
+            <p>To program this, you have to get a gentle way of choosing the
+specificId, associate this to the subscription number returned by
+Ivy.bindMsg(), and add code within the callback to perform the unsubscription.
+Moreover, you have to be sure that there are not two "B type" agents on the
+bus, otherwise you'll eventually perform your callback twice if the results
+are sent during the short lapse of time before unsubscription.
+</p>
+            <p>The preferred way is to to let the API provide this singleton mechanism
+with <code class="function">Ivy.getWBUID()</code>
+                 function returning an unique ID, and
+the <code class="function">Ivy.bindMsgOnce()</code>
+                 that handles all the mechanisms
+ensuring that the callback will be run on time only, and that the
+unsubscription will take place.
+</p><pre class="programlisting">
+  String id = bus.getWBUID(); // a more or less unique ID
+  bus.bindMsgOnce("MyResult ID="+id+" RESULT=(.*)",{
+    public void receive(IvyClient ic,String[] args) {
+      System.out.println("2+2="+args[0]);
+      // the unsubscription is done for me
+    }
+  });
+  bus.sendMsg("MyRequest ID="+id+" QUER=2+2");
+</pre><p>
+            </p>
+        </div>
+        <div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a id="N403A5"/>how to quit the application ?</h3></div></div></div>
+            
+            <p>
+If your application decides to quit or leave the bus, the safest way is to
+invoque <code class="function">Ivy.stop()</code>
+                . This will send a clean goodby message
+to the other agents, close the sockets, end the threads, etc. However, you can
+en the JVM performing a <code class="function">System.exit(int)</code>
+                 and let the
+other agents realize that you've gone.
+</p>
+            <p>
+If some other agents wants you to quit the bus, it will send you a die
+message. The protocol will first run you
+<code class="function">IvyApplicationListener.die()</code>
+                , if any, then
+perform some socket/thread clean up, and disconnect you from the bus. As a
+good citizen on the Ivy bus, you should take the appropriate measures top stop
+your application within the <code class="function">IvyApplicationListener.die()</code>
+                
+method, for instance run <code class="function">System.exit()</code>
+                 or make all you
+thread stop, disposing your toplevel Swing Frames. Here is an example of how to do it:
+</p><pre class="programlisting">
+import fr.dgac.ivy.* ;
+import javax.swing.*;
+
+public class EndApp extends IvyApplicationAdapter {
+
+  public static void main(String[] args) throws IvyException {
+    Ivy bus=new Ivy("EndApp","EndApp ready",null);
+    EndApp e = new EndApp(bus); // a frame is opened, and the Swing Thread is started
+    bus.addApplicationListener(e);
+    bus.start(Ivy.getDomain(null));  // Ivy threads are up and running
+    // the control flow won't stop until the end of all above threads
+  }
+
+  private Ivy bus;
+  JFrame f;
+
+  public EndApp(Ivy b) {
+    this.bus=b;
+    f=new JFrame("test");
+    f.getContentPane().add(new JLabel("some label"),java.awt.BorderLayout.CENTER);
+    f.pack();
+    f.setVisible(true);
+  }
+
+  public void die(IvyClient client, int id,String msgarg) {
+    System.out.println("received die msg from " + client.getApplicationName());
+    f.dispose(); // closes the only window, thus quitting the swing thread
+  } // end of die callback, the Ivy threads are stopped
+
+}
+</pre><p>
+            </p>
+        </div>
+    </div><div class="navfooter"><hr/><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s07.html">Prev</a> </td><td align="center" width="20%"> </td><td align="right" width="40%"> <a accesskey="n" href="ar01s09.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Utilities </td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%"> Contacting the authors</td></tr></table></div></body></html>
