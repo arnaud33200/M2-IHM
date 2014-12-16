@@ -1,0 +1,6 @@
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\bin\Debug\WindowsFormsControlLibrary1.dll
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\bin\Debug\WindowsFormsControlLibrary1.pdb
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\obj\Debug\WindowsFormsControlLibrary1.dll
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\obj\Debug\WindowsFormsControlLibrary1.pdb
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\obj\Debug\WindowsFormsControlLibrary1.UserControl1.resources
+C:\Users\ladoucar\Documents\Visual Studio 2010\WindowsFormsControlLibrary1\WindowsFormsControlLibrary1\obj\Debug\WindowsFormsControlLibrary1.csproj.GenerateResource.Cache
