@@ -1,0 +1,217 @@
+package polyline;
+
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+
+/**
+ * The Polyline implemented using the "State as Object" pattern
+ * Look, Ma, no "switches" !
+ */
+
+public class StatePatternPolyline
+	extends Applet
+	implements MouseListener, MouseMotionListener {
+	/**
+	 * The abstract "State" class
+	 * It could also have been defined as an interface
+	 **/
+	private abstract class State {
+		abstract void leftMouseDown(MouseEvent e);
+		abstract void rightMouseDown(MouseEvent e);
+		abstract void mouseMoved(MouseEvent e);
+		abstract void doubleClick();
+	}
+
+	/**
+	 * "Idle" concrete state
+	 * Note that all concrete states could also have been defined as
+	 * anonymous inner classes
+	 **/
+	private class Idle
+		extends State {
+		void leftMouseDown(MouseEvent e) {
+			addOnePoint(e);
+			myState = ONEPOINT;
+		}
+		void rightMouseDown(MouseEvent e) {
+			// Ignore
+		}
+		void mouseMoved(MouseEvent e) {
+			// Ignore
+		}
+		void doubleClick() {
+			// Ignore
+		}
+	}
+
+	/**
+	 * "OnePoint" concrete state
+	 **/
+	private class OnePoint
+		extends State {
+		void leftMouseDown(MouseEvent e) {
+			addOnePoint(e);
+			myState = MANYPOINTS;
+		}
+		void rightMouseDown(MouseEvent e) {
+			// Ignore
+		}
+		void mouseMoved(MouseEvent e) {
+			drawRubber(e);
+		}
+		void doubleClick() {
+			finish();
+			myState = IDLE;
+		}
+	}
+
+	/**
+	 * "ManyPoints" concrete state
+	 **/
+	private class ManyPoints
+		extends State {
+		void leftMouseDown(MouseEvent e) {
+			if (myTop < (MAX - 2)) {
+				addOnePoint(e);
+			} else {
+				addOnePoint(e);
+				finish();
+				myState = IDLE;
+			}
+		}
+
+		void rightMouseDown(MouseEvent e) {
+			if (myTop == 1) {
+				removeLastPoint();
+				myState = ONEPOINT;
+			} else {
+				removeLastPoint();
+			}
+		}
+
+		void mouseMoved(MouseEvent e) {
+			drawRubber(e);
+		}
+
+		void doubleClick() {
+			finish();
+			myState = IDLE;
+		}
+	}
+
+	private static final int MAX = 5;
+	// Global variables of the StateChart
+	private Point[] myPolyline = new Point[MAX];
+	private int myTop = -1;
+	private Point myTemporaryPoint;
+	// Enumeration of possible states
+	private final State IDLE = new Idle();
+	private final State ONEPOINT = new OnePoint();
+	private final State MANYPOINTS = new ManyPoints();
+	// State variable
+	private State myState = IDLE;
+
+	public StatePatternPolyline() {
+		addMouseListener(this);
+		addMouseMotionListener(this);
+	}
+
+	// Utility methods
+	private void finish() {
+		myTop = -1;
+	}
+
+	private void addOnePoint(MouseEvent e) {
+		myTop++;
+		myPolyline[myTop] = e.getPoint();
+		myTemporaryPoint = e.getPoint();
+	}
+
+	private void removeLastPoint() {
+		Graphics g = this.getGraphics();
+		g.setXORMode(getBackground());
+		// Erase temporary line
+		g.drawLine(
+			myPolyline[myTop].x,
+			myPolyline[myTop].y,
+			myTemporaryPoint.x,
+			myTemporaryPoint.y
+			);
+		// Erase last segment
+		g.drawLine(
+			myPolyline[myTop - 1].x,
+			myPolyline[myTop - 1].y,
+			myPolyline[myTop].x,
+			myPolyline[myTop].y
+			);
+		// Erase last point (drawn an odd number of times
+		g.drawLine(
+			myPolyline[myTop].x,
+			myPolyline[myTop].y,
+			myPolyline[myTop].x,
+			myPolyline[myTop].y
+			);
+		myTop--;
+		// Draw new temporary line
+		g.drawLine(
+			myPolyline[myTop].x,
+			myPolyline[myTop].y,
+			myTemporaryPoint.x,
+			myTemporaryPoint.y
+			);
+	}
+
+	private void drawRubber(MouseEvent e) {
+		Graphics g = this.getGraphics();
+		g.setXORMode(getBackground());
+		// Erase temporary line
+		g.drawLine(
+			myPolyline[myTop].x,
+			myPolyline[myTop].y,
+			myTemporaryPoint.x,
+			myTemporaryPoint.y
+			);
+		myTemporaryPoint = e.getPoint();
+		// Draw new temporary line
+		g.drawLine(
+			myPolyline[myTop].x,
+			myPolyline[myTop].y,
+			myTemporaryPoint.x,
+			myTemporaryPoint.y
+			);
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		myState.mouseMoved(e);
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2) {
+			myState.doubleClick();
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {
+		if ( (e.getModifiers() & InputEvent.BUTTON1_MASK) ==
+		    InputEvent.BUTTON1_MASK) {
+			myState.leftMouseDown(e);
+		} else if (e.isPopupTrigger()) {
+			myState.rightMouseDown(e);
+		}
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		if (e.isPopupTrigger()) {
+			myState.rightMouseDown(e);
+		}
+	}
+
+	public void mouseDragged(MouseEvent e) {
+		myState.mouseMoved(e);
+	}
+
+	public void mouseEntered(MouseEvent e) {}
+
+	public void mouseExited(MouseEvent e) {}
+}

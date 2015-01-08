@@ -1,0 +1,5 @@
+[
+{"name":"majeur.toto","size":3938,"imports":["mineur.m1"]},
+{"name":"majeur.tutu","size":3938,"imports":["mineur.m1", "mineur.m2"]},
+{"name":"majeur.titi","size":3938,"imports":["mineur.m3"]}
+]

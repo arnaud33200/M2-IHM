@@ -1,0 +1,134 @@
+@startuml
+abstract class simpledraw.DrawingTool
+abstract class simpledraw.Shape
+annotation java.lang.Override
+class java.awt.AWTEvent
+class java.awt.BorderLayout
+class java.awt.Color
+class java.awt.Cursor
+class java.awt.Dimension
+class java.awt.FlowLayout
+class java.awt.Graphics
+class java.awt.Graphics2D
+class java.awt.Point
+class java.awt.Rectangle
+class java.awt.RenderingHints
+class java.awt.event.ActionEvent
+class java.awt.event.ActionListener
+class java.awt.event.KeyEvent
+class java.awt.event.MouseEvent
+class java.awt.event.WindowEvent
+class java.util.ArrayList
+class java.util.Collection
+class java.util.Iterator
+class java.util.LinkedList
+class java.util.List
+class javax.swing.ButtonGroup
+class javax.swing.JFrame
+class javax.swing.JPanel
+class javax.swing.JTextField
+class javax.swing.JToggleButton
+class simpledraw.Circle
+class simpledraw.CircleTool
+class simpledraw.ConsolView
+class simpledraw.Drawing
+class simpledraw.DrawingModel
+class simpledraw.DrawingPanel
+class simpledraw.GraphicalView
+class simpledraw.Line
+class simpledraw.LineTool
+class simpledraw.Main
+class simpledraw.MainFrame
+class simpledraw.PolyLine
+class simpledraw.Rectangle
+class simpledraw.RectangleTool
+class simpledraw.SelectionTool
+class simpledraw.TextView
+interface java.awt.event.KeyListener
+interface java.awt.event.MouseListener
+interface java.awt.event.MouseMotionListener
+interface simpledraw.DrawingView
+interface simpledraw.DrawingVisitor
+simpledraw.DrawingTool ..> java.awt.Graphics2D
+simpledraw.DrawingTool ..> java.awt.event.KeyEvent
+simpledraw.DrawingTool ..> java.awt.event.MouseEvent
+simpledraw.DrawingTool --|> java.awt.event.KeyListener
+simpledraw.DrawingTool --|> java.awt.event.MouseListener
+simpledraw.DrawingTool --|> java.awt.event.MouseMotionListener
+simpledraw.Shape ..> java.awt.Graphics2D
+simpledraw.Shape ..> java.awt.Point
+simpledraw.Circle --|> simpledraw.Shape
+simpledraw.Circle ..> java.awt.Color
+simpledraw.Circle ..> java.awt.Graphics2D
+simpledraw.Circle ..> java.awt.Point
+simpledraw.CircleTool --|> simpledraw.DrawingTool
+simpledraw.CircleTool ..> java.awt.Color
+simpledraw.CircleTool ..> java.awt.Cursor
+simpledraw.CircleTool ..> java.awt.Graphics2D
+simpledraw.CircleTool ..> java.awt.Point
+simpledraw.CircleTool ..> java.awt.event.MouseEvent
+simpledraw.ConsolView --|> simpledraw.DrawingView
+simpledraw.Drawing ..> java.awt.Graphics2D
+simpledraw.Drawing ..> java.awt.Point
+simpledraw.DrawingModel ..> java.lang.Override
+simpledraw.DrawingModel ..> java.awt.Point
+simpledraw.DrawingModel ..> java.util.LinkedList
+simpledraw.DrawingModel ..> java.util.List
+simpledraw.DrawingModel --|> simpledraw.Drawing
+simpledraw.DrawingPanel ..> java.awt.Cursor
+simpledraw.DrawingPanel ..> java.awt.Graphics
+simpledraw.DrawingPanel ..> java.awt.Graphics2D
+simpledraw.DrawingPanel ..> java.awt.RenderingHints
+simpledraw.DrawingPanel --|> javax.swing.JPanel
+simpledraw.DrawingPanel --|> simpledraw.DrawingView
+simpledraw.GraphicalView --|> simpledraw.DrawingView
+simpledraw.Line --|> simpledraw.Shape
+simpledraw.Line ..> java.awt.Color
+simpledraw.Line ..> java.awt.Graphics2D
+simpledraw.Line ..> java.awt.Point
+simpledraw.LineTool --|> simpledraw.DrawingTool
+simpledraw.LineTool ..> java.awt.Color
+simpledraw.LineTool ..> java.awt.Cursor
+simpledraw.LineTool ..> java.awt.Graphics2D
+simpledraw.LineTool ..> java.awt.Point
+simpledraw.LineTool ..> java.awt.event.MouseEvent
+simpledraw.MainFrame ..> java.awt.AWTEvent
+simpledraw.MainFrame ..> java.awt.BorderLayout
+simpledraw.MainFrame ..> java.awt.Dimension
+simpledraw.MainFrame ..> java.awt.FlowLayout
+simpledraw.MainFrame ..> java.awt.event.ActionEvent
+simpledraw.MainFrame ..> java.awt.event.ActionListener
+simpledraw.MainFrame ..> java.awt.event.WindowEvent
+simpledraw.MainFrame ..> javax.swing.ButtonGroup
+simpledraw.MainFrame --|> javax.swing.JFrame
+simpledraw.MainFrame ..> javax.swing.JPanel
+simpledraw.MainFrame ..> javax.swing.JToggleButton
+simpledraw.PolyLine --|> simpledraw.Shape
+simpledraw.PolyLine ..> java.awt.Color
+simpledraw.PolyLine ..> java.awt.Graphics2D
+simpledraw.PolyLine ..> java.awt.Point
+simpledraw.PolyLine ..> java.awt.Rectangle
+simpledraw.PolyLine ..> java.util.ArrayList
+simpledraw.PolyLine ..> java.util.Collection
+simpledraw.PolyLine ..> java.util.Iterator
+simpledraw.PolyLine ..> java.util.List
+simpledraw.Rectangle --|> simpledraw.Shape
+simpledraw.Rectangle ..> java.lang.Override
+simpledraw.Rectangle ..> java.awt.Color
+simpledraw.Rectangle ..> java.awt.Graphics2D
+simpledraw.Rectangle ..> java.awt.Point
+simpledraw.RectangleTool --|> simpledraw.DrawingTool
+simpledraw.RectangleTool ..> java.lang.Override
+simpledraw.RectangleTool ..> java.awt.Graphics2D
+simpledraw.RectangleTool ..> java.awt.Point
+simpledraw.RectangleTool ..> java.awt.event.MouseEvent
+simpledraw.SelectionTool --|> simpledraw.DrawingTool
+simpledraw.SelectionTool ..> java.awt.Cursor
+simpledraw.SelectionTool ..> java.awt.Graphics2D
+simpledraw.SelectionTool ..> java.awt.Point
+simpledraw.SelectionTool ..> java.awt.Rectangle
+simpledraw.SelectionTool ..> java.awt.event.KeyEvent
+simpledraw.SelectionTool ..> java.awt.event.MouseEvent
+simpledraw.TextView --|> javax.swing.JTextField
+simpledraw.TextView --|> simpledraw.DrawingView
+@enduml

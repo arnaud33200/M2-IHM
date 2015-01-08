@@ -1,0 +1,29 @@
+package polyline;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+public class TestApplet extends Applet implements MouseListener {
+	public TestApplet() {
+		this.addMouseListener(this);
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		// récupérer le contexte graphique de l'applet
+		Graphics g = this.getGraphics();
+		// récuperer les paramètres de l'événement
+		int x = e.getX();
+		int y = e.getY();
+		// Dessiner un cercle aux coordonnées de la souris
+		g.drawOval(x,y, 10, 10);
+	}
+	public void mousePressed(MouseEvent e) {
+	}
+	public void mouseReleased(MouseEvent e) {
+	}
+	public void mouseEntered(MouseEvent e) {
+	}
+	public void mouseExited(MouseEvent e) {
+	}
+}
