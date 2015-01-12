@@ -5,6 +5,8 @@
  */
 package Modele;
 
+import Command.ICommand;
+
 /**
  *
  * @author arnaud
@@ -23,6 +25,9 @@ public class SimpleTwoPlayersGameModel extends GameModel {
     
     @Override
     public void play(int t) {
+        if (gameOver) {
+            return;
+        }
         Token st = availableTokens.get(t);
         boolean removed = availableTokens.remove(t,st);
         if (removed){
@@ -54,6 +59,19 @@ public class SimpleTwoPlayersGameModel extends GameModel {
         pManager.setCurrentPlayer(playerNumber);
         fireAllNextPlayerListener();
         fireAllGameHasBegunListener();
+    }
+
+    @Override
+    public void undo() {
+        ICommand c = undomanager.undo();
+        if (c != null) {
+            c.undo();
+        }
+    }
+
+    @Override
+    public void redo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
