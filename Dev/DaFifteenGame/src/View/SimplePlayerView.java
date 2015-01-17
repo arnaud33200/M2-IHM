@@ -129,6 +129,8 @@ public class SimplePlayerView extends javax.swing.JPanel implements GameView{
     }
 
     private Color bighterColor(Color c) {
+        return c.brighter();
+        /*
         int r = (c.getRed() + 100);
         int g = (c.getGreen()+ 100);
         int b = (c.getBlue() + 100);
@@ -136,5 +138,6 @@ public class SimplePlayerView extends javax.swing.JPanel implements GameView{
         if (g>255) g=255;
         if (b>255) b=255;
         return new Color(r, g, b);
+                */
     }
 }

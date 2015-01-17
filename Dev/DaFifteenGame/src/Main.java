@@ -6,19 +6,11 @@ import Modele.SimpleTwoPlayersGameModel;
 import View.SimpleBoardGameView;
 import View.SimpleGameControlView;
 import View.SimplePlayerView;
-import com.sun.media.jfxmedia.events.PlayerEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import javax.swing.border.Border;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -5,6 +5,7 @@
  */
 package Modele;
 
+import Command.UndoManager;
 import View.GameView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public abstract class GameModel {
     protected ArrayList<GameView> viewers;
     protected ArrayList<GameListener> listeners;
     protected Player winner = null;
+    protected UndoManager undomanager = new UndoManager();
 
     public GameModel(Player... players) {
         viewers = new ArrayList<>();
@@ -79,6 +81,8 @@ public abstract class GameModel {
     
     public abstract void play(int t);
     public abstract void resetGame();
+    public abstract void undo();
+    public abstract void redo();
     public void startGame(int playerNumber) {}
 
     public HashMap<Integer, Token> getAvailableTokens() {

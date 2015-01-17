@@ -5,6 +5,7 @@
  */
 package View;
 
+import Command.PlayTokenCommand;
 import Modele.GameModel;
 import Modele.Player;
 import Modele.Token;
@@ -32,7 +33,10 @@ public class SimpleBoardGameView extends javax.swing.JPanel implements GameView 
         @Override
         public void ShapeLabelMouseClicked(ShapeLabelEvent e) {
             shapelabel.ShapeLabel sl = (shapelabel.ShapeLabel)e.getSource();
-            model.play(Integer.parseInt(sl.getText()));
+            
+            int t = Integer.parseInt(sl.getText());
+            PlayTokenCommand c = new PlayTokenCommand(model, t);
+            c.execute();
             /*
             setShapeLabelInvisible(sl);
             sl.setEnabled(false);
