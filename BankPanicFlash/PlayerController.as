@@ -41,15 +41,15 @@
 			//trace("Key Code Pressed: " + event.keyCode);
 			if (event.keyCode == 87) {
 				shoot1Pressed = true;
-				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,1) );
+				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,0) );
 			}
 			else if (event.keyCode == 88) {
 				shoot2Pressed = true;
-				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,2) );
+				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,1) );
 			}
 			else if (event.keyCode == 40) {
 				shoot3Pressed = true;
-				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,3) );
+				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,2) );
 			}
 			else if (event.keyCode == 37) {
 				leftPressed = true;

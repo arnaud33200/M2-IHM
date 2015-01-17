@@ -1,19 +1,21 @@
 ﻿package {
-	
-	/*override public function registerEvents():void
-	{
-		model.addEventListener( EventNames.SECTION_1, show );
-		model.addEventListener( ( EventNames.SECTION_1 + Model.CLEAR ), hide );
-	}
-	*/
-	
-	public class GameEvent {
 
-		public static const DOOR_IS_OPEN:String = "doorisopen";
-		public static const SHOOT_PRESSED:String = "shootpressed";
-		public static const DIRECTION_PRESSED:String = "directionpressed";
-		public static const TOO_LATE:String = "toolate";
-		public static const WRONG_TARGET:String = "wrongtarget";
+	import flash.events.Event;
+	
+	public class GameEvent extends Event {
+
+		public static const DOORS_MOVING_LEFT:String = "doorsmovingleft";
+		public static const DOORS_MOVING_RIGHT:String = "doorsmovingright";
+		public static const DOOR_OPEN:String = "dooropen";
+		
+		public var numberOpen:int;
+		public var door:DoorModel;
+
+		public function GameEvent(type:String) {
+			super(type, bubbles, cancelable);
+			numberOpen = -1;
+		}
+
 	}
 	
 }

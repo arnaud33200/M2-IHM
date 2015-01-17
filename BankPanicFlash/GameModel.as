@@ -6,7 +6,7 @@
 	
 	//dispatchEvent( new Event( event ) );
 	
-	public class GameModel {
+	public class GameModel extends EventDispatcher {
 		
 		public static const SHOOT1:int = 1;
 		public static const SHOOT2:int = 2;
@@ -27,9 +27,6 @@
 		
 		public function GameModel() {
 			
-			//dispatcher = new EventDispatcher();
-			//dispatcher.addEventListener(EventShootDoor.SHOOT_EVENT, ShootPressed);
-			
 			doorManager = new DoorManager(this);
 			doorOpened = 0;
 			state=0;
@@ -43,24 +40,28 @@
 		}
 		
 		public function shootDoor(n:int):void {
-			
+			doorManager.shootAtTheDoor(n);
+			// tell the view that a shoot has to be animated !!!
 		}
 		
 		public function changeDoorWindow(d:int):void {
 			transition.start();
 			if (d == GOLEFT) {
 				doorManager.moveDoorWindowLeft();
+				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_LEFT));
 			} else {
 				doorManager.moveDoorWindowRight();
+				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_RIGHT));
 			}
 		}
 		
-		public function gameWin():void {
+		public function gameWin(e:DoorEvent):void {
 			
 		}
 		
-		public function gameLoose():void {
-			
+		public function gameLoose(e:DoorEvent):void {
+			trace("GAME LOOSE");
+			doorClose(e);
 		}
 		
 		// when the user decide to choice 3 doors
@@ -78,19 +79,19 @@
 				case 0:
 					state = 3;
 					wait.stop();
-					gameLoose();
+					//gameLoose();
 					break;
 				case 1:
 					state = 3;
-					gameLoose();
+					//gameLoose();
 					break;
 				case 2:
 					state = 3;
-					gameLoose();
+					//gameLoose();
 					break;
 				case 3:
 					state = 3;
-					gameLoose();
+					//gameLoose();
 					break;
 				case 4:
 					break;
@@ -171,6 +172,10 @@
 				case 4:
 					break;
 			}
+			var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN);
+			e.numberOpen = doorManager.doorLogicNumber(d.number);
+			e.door = d;
+			dispatchEvent(e);
 		}
 		
 		public function doorClose(e:DoorEvent):void {
