@@ -7,7 +7,6 @@ package View;
 
 import Command.PlayTokenCommand;
 import Modele.GameModel;
-import Modele.Player;
 import Modele.Token;
 import java.awt.Color;
 import java.awt.FlowLayout;
