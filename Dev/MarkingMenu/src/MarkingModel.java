@@ -42,8 +42,7 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
              return;
          }
          sections = new ArrayList<>();
-         
-        t = new Timer();
+
         state = STATEMENU.NOMENU;     
     }
      
@@ -125,6 +124,7 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     public void startTimer()
     {
         System.out.println("WAITING ...");
+        t = new Timer();
         t.schedule(new TimerTask() {
             
             @Override
@@ -142,15 +142,14 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
             case PIEHIDE: 
                 break;
         }
-            }
-
-            
+            }            
         }, WAITTIME);
     }
     
     @Override
     public void mousePressed(MouseEvent e) {
         gMouse = e.getComponent().getGraphics();
+        
         switch (state) {
             case NOMENU:
                 Graphics g = e.getComponent().getGraphics();
@@ -177,6 +176,9 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     public void mouseReleased(MouseEvent e) {
         Graphics g = e.getComponent().getGraphics();
         g.clearRect(0, 0, 500, 500);
+        try {
+            t.cancel();
+        } catch (Exception exp) {}
         switch (state) {
             case NOMENU: 
                 break;

@@ -24,6 +24,7 @@ public class MainFrame extends javax.swing.JFrame {
         s.addSection("JO", Color.blue);
         s.addSection("HOUDA", Color.white);
         s.addSection("Vincent", Color.black);
+        s.addSection("NONO", Color.ORANGE);
         addMouseMotionListener(s);
         addMouseListener(s);
     }
