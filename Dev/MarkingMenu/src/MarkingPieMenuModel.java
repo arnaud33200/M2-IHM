@@ -1,14 +1,22 @@
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.stage.Popup;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.PopupFactory;
+import javax.swing.SwingUtilities;
 
 
 /*
@@ -20,7 +28,13 @@ import java.util.TimerTask;
  *
  * @author ladoucar
  */
-public class MarkingModel implements MouseMotionListener, MouseListener{
+/*newpopup = PopupFactory.getSharedInstace().getPopup(invoker, composantToPopup,x,y);
+newpopup.show();
+newpopup.hide();*/
+
+public class MarkingPieMenuModel implements MouseMotionListener, MouseListener{
+    
+    private static boolean DEBUGMODE = true;
     
     public int INNERCIRCLESIZE = 40;
     public int OUTERCIRCLESIZE = 100;
@@ -32,17 +46,23 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     Timer t;
     Point firstPoint;
     
-    private Graphics gMouse;
+    private MouseEvent gMouse;
+    private Component myComponent;
+    private Component myRootComponent;
+    private javax.swing.Popup myPopup;
     
     private ArrayList<Section> sections;
     private Section selectedSection;
+    private MarkingPieMenuViewTest myPieView;
     
-     public MarkingModel(int nbSection) {
-         if (nbSection < 2) {
-             return;
-         }
+     public MarkingPieMenuModel(Component c) {
          sections = new ArrayList<>();
-
+         myComponent = c;
+         myRootComponent = SwingUtilities.getRoot(c);
+         myComponent.addMouseListener(this);
+        myComponent.addMouseMotionListener(this);
+         myPopup = null;
+         myPieView = new MarkingPieMenuViewTest(INNERCIRCLESIZE, OUTERCIRCLESIZE, sections);
         state = STATEMENU.NOMENU;     
     }
      
@@ -62,40 +82,42 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
                  msg += "[" + angle + "] - ";
                  angle += interval;
              }
-             System.out.println(msg);
+             printDebug(msg);
         }
     }
 
     private void doCommand() {
-        System.out.println("DO COMMANDE : " + selectedSection.getName());
+        printDebug("DO COMMANDE : " + selectedSection.getName());
     }
 
     private void hideMenu() {
-        System.out.println("HIDE");
+        if (myPopup != null) {
+            myPopup.hide();
+        }
+        printDebug("HIDE");
     }
     
     private void showMenu() {
-        int xi = firstPoint.x - (INNERCIRCLESIZE);
-        int yi = firstPoint.y - (INNERCIRCLESIZE);
-        int xo = firstPoint.x - (OUTERCIRCLESIZE);
-        int yo = firstPoint.y - (OUTERCIRCLESIZE);
-        gMouse.setColor(Color.GRAY);
-        gMouse.fillOval(xo, yo, OUTERCIRCLESIZE*2, OUTERCIRCLESIZE*2);
-        gMouse.setColor(Color.WHITE);
-        gMouse.fillOval(xi, yi, INNERCIRCLESIZE*2, INNERCIRCLESIZE*2);
-       System.out.println("SHOW MENU");
+        int mx = gMouse.getLocationOnScreen().x - OUTERCIRCLESIZE;
+        int my = gMouse.getLocationOnScreen().y - OUTERCIRCLESIZE;
+        myPieView.setMouseX(mx);
+        myPieView.setMouseY(my);
+        myPopup = PopupFactory.getSharedInstance().getPopup(gMouse.getComponent(), myPieView, mx, my);
+       
+        myPopup.show();
+       printDebug("SHOW MENU");
     }
 
     private void checkIfIn(MouseEvent e) {
-        double d = Math.sqrt((e.getX() - firstPoint.x)*(e.getX()-firstPoint.x) + (e.getY()-firstPoint.y)*(e.getY()-firstPoint.y));
+        double d = firstPoint.distance(e.getX(), e.getY());
         if (d > INNERCIRCLESIZE && d < OUTERCIRCLESIZE) {
             if (!in) {
-            //System.out.println(state + " - CHECK : IN ! " + d);
+            printDebug(state + " - CHECK : IN ! " + d);
             in = true;
             }
         } else {
             if (in) {
-            //System.out.println(state + " - CHECK : out ..." + d);
+            printDebug(state + " - CHECK : out ..." + d);
             in = false;
             }
         }
@@ -103,7 +125,6 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
 
     private void findSection(MouseEvent e) {
         float angle = getAngle(firstPoint, new Point(e.getX(),e.getY()));
-        
         selectedSection = sections.get(sections.size()-1);
         float bot = (float) 0.0; 
        for (Section s : sections) {
@@ -112,10 +133,10 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
             }
             bot = s.getAngle();
         }
-        
-        Graphics g = e.getComponent().getGraphics();
+       
+       /* Graphics g = e.getComponent().getGraphics();
         g.setColor(selectedSection.getColor());
-        g.fillRect(e.getX(), e.getY(), 5, 5);
+        g.fillRect(e.getX(), e.getY(), 5, 5);*/
     }
     
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,7 +144,7 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     
     public void startTimer()
     {
-        System.out.println("WAITING ...");
+        printDebug("WAITING ...");
         t = new Timer();
         t.schedule(new TimerTask() {
             
@@ -148,17 +169,23 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     
     @Override
     public void mousePressed(MouseEvent e) {
-        gMouse = e.getComponent().getGraphics();
-        
+        gMouse = e;
+            printDebug("click : " + e.getButton());
+            
         switch (state) {
             case NOMENU:
-                Graphics g = e.getComponent().getGraphics();
+                /*Graphics g = e.getComponent().getGraphics();
                 g.drawLine(e.getX()-3, e.getY(), e.getX()+3, e.getY());
-                g.drawLine(e.getX(), e.getY()-3, e.getX(), e.getY()+3);
+                g.drawLine(e.getX(), e.getY()-3, e.getX(), e.getY()+3);*/
                 in = false;
                 firstPoint = new Point(e.getX(), e.getY());
+                if (e.getButton() == 3) {
                 startTimer();
                 state = STATEMENU.WAIT;
+                } else if (e.getButton() == 1){
+                    showMenu();
+                    state = STATEMENU.PIESHOW;
+                }
                 break;
             case WAIT:
                 throw new RuntimeException("Mouse Down : WAIT");
@@ -174,8 +201,8 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Graphics g = e.getComponent().getGraphics();
-        g.clearRect(0, 0, 500, 500);
+        /*Graphics g = e.getComponent().getGraphics();
+        g.clearRect(0, 0, 500, 500);*/
         try {
             t.cancel();
         } catch (Exception exp) {}
@@ -256,7 +283,7 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
 			}
 
 			return (float) (theta / (2 * Math.PI));              
-		}
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -274,6 +301,10 @@ public class MarkingModel implements MouseMotionListener, MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
         
+    }
+    
+    private void printDebug(String msg) {
+        if (DEBUGMODE) System.out.println(msg);
     }
     
 }

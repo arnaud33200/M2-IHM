@@ -18,15 +18,21 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
-        MarkingModel s = new MarkingModel(4);
-        s.addSection("JEJ", Color.red);
-        s.addSection("TOTO", Color.green);
-        s.addSection("JO", Color.blue);
-        s.addSection("HOUDA", Color.white);
-        s.addSection("Vincent", Color.black);
-        s.addSection("NONO", Color.ORANGE);
-        addMouseMotionListener(s);
-        addMouseListener(s);
+        MarkingPieMenuModel s = new MarkingPieMenuModel(this);
+        s.addSection("1", new Color(0x5e98e1));
+        s.addSection("2", new Color(0x3f87e0));
+        s.addSection("3", new Color(0x82aee4));
+        s.addSection("4", new Color(0x6da1e2));
+        s.addSection("5", new Color(0xa5c1e3));
+        s.addSection("6", new Color(0x95b8e4));
+        s.addSection("7", new Color(0xcdd7e3));
+        s.addSection("8", new Color(0xb6cae3));
+        
+        MarkingPieMenuModel s2 = new MarkingPieMenuModel(jButton1);
+        s2.addSection("1", new Color(0x9bbf8b));
+        s2.addSection("2", new Color(0x7fb866));
+        s2.addSection("3", new Color(0xc7ddbe));
+
     }
 
     /**
@@ -38,17 +44,27 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(539, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(400, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -90,5 +106,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
