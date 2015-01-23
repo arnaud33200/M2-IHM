@@ -24,6 +24,7 @@
 				d.addEventListener(DoorEvent.GOOD_SHOOT, good_shoot);
 				d.addEventListener(DoorEvent.MONEY, money);
 				d.addEventListener(DoorEvent.WRONG_TARGET, wrong_target);
+				d.addEventListener(DoorEvent.CLOSING_END, closing_end);
 				doors[i] = d;
 			}
 			doorWindow = [0,1,2];
@@ -31,6 +32,18 @@
 			newComingTimer = new Timer(timePeriod, 0);
 			newComingTimer.addEventListener(TimerEvent.TIMER, createNewComming);
 			newComingTimer.start();
+		}
+		
+		public function isAllDoorsClosed():Boolean {
+			var rtn:Boolean = true;
+			for (var i:int = 0; i < 3; i++) {
+				var d:DoorModel = doors[i];
+				if (d.state != DoorModel.STATECLOSE) {
+					rtn = false;
+					trace("The door " + d.number + "not closed yet");
+				}
+			}
+			return rtn;
 		}
 		
 		public function doorLogicNumber(n:int):int {
@@ -47,25 +60,26 @@
 		
 		private function too_early(e:DoorEvent):void {
 			trace("[" + e.door.number + "] too early !!!");
-			model.doorClose(e);
 		}
 		private function good_shoot(e:DoorEvent):void {
 			trace("[" + e.door.number + "] BOOM NICE SHOT !!!");
-			model.doorClose(e);
 		}
 		private function money(e:DoorEvent):void {
 			trace("[" + e.door.number + "] MONEY !!!");
-			model.doorClose(e);
 		}
-		
 		// bad action
 		private function too_late(e:DoorEvent):void {
 			trace("[" + e.door.number + "] TOO LATE !!!");
+			model.doorClose(e);
 			model.gameLoose(e);
 		}
 		private function wrong_target(e:DoorEvent):void {
 			trace("[" + e.door.number + "] WRONG !!!");
+			model.doorClose(e);
 			model.gameLoose(e);
+		}
+		private function closing_end(e:DoorEvent):void {
+			model.doorClose(e);
 		}
 		
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,6 +90,7 @@
 				door.state == DoorModel.STATEACTIONBAD ||
 				door.state == DoorModel.STATEOPENGOOD ||
 				door.state == DoorModel.STATEACTIONGOOD) {
+					trace ("[" + n + "] - SHOOT");
 					door.shootReceived();
 				}
 		}

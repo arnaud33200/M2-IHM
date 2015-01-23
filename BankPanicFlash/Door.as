@@ -14,10 +14,9 @@
 		public function Door(k:int, n:int) {
 			kind = k;
 			this.n = n;
-			t = new Timer(600, 1);
+			t = new Timer(500, 1);
 			t.addEventListener(TimerEvent.TIMER, timerListener);
 			t.start();
-			this.play();
 		}
 		
 		private function timerListener (e:TimerEvent):void{

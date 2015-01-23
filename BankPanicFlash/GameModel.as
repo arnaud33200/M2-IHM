@@ -15,7 +15,12 @@
 		public static const GOLEFT:int = 4;
 		public static const GORIGHT:int = 5;
 		
-		// 0:Idle - 1:Transition - 2:ActionTime - 3:loose - 4:win
+		public static const STATEIDLE:int = 0;
+		public static const STATETRANSITION:int = 1;
+		public static const STATEACTION:int = 2;
+		public static const STATEEND:int = 3;
+		
+		// 0:Idle - 1:Transition - 2:ActionTime - 3:loose
 		// il n'y pas pas d'implementation pour le type enum
 		private var state:int;
 		private var gameTime:Timer;
@@ -76,24 +81,22 @@
 		
 		private function timeIsUp (e:TimerEvent):void{
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					state = 3;
 					wait.stop();
 					//gameLoose();
 					break;
-				case 1:
+				case STATETRANSITION:
 					state = 3;
 					//gameLoose();
 					break;
-				case 2:
+				case STATEACTION:
 					state = 3;
 					//gameLoose();
 					break;
-				case 3:
+				case STATEEND:
 					state = 3;
 					//gameLoose();
-					break;
-				case 4:
 					break;
 			}
 		}
@@ -101,17 +104,15 @@
 		private function transitionFinished(e:TimerEvent):void{
 			transition.stop();
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					break;
-				case 1:
+				case STATETRANSITION:
 					state = 0;
 					wait.start();
 					break;
-				case 2:
+				case STATEACTION:
 					break;
-				case 3:
-					break;
-				case 4:
+				case STATEEND:
 					break;
 			}
 		}
@@ -119,57 +120,52 @@
 		public function ShootPressed(e:EventShootDoor):void {
 			
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					state = 0;
 					shootDoor(e.door);
 					break;
-				case 1:
+				case STATETRANSITION:
 					break;
-				case 2:
+				case STATEACTION:
 					state = 2;
 					shootDoor(e.door);
 					break;
-				case 3:
-					break;
-				case 4:
+				case STATEEND:
 					break;
 			}
 		}
 		
 		public function DirectionPressed(action:int):void {
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					state = 1;
 					changeDoorWindow(action);
 					wait.stop();
 					break;
-				case 1:
+				case STATETRANSITION:
 					state = 1;
 					break;
-				case 2:
+				case STATEACTION:
+					//trace("IMPOSSSIBLE, ACTION TIME !!! " + doorOpened + " - " + doorManager.isAllDoorsClosed() );
 					break;
-				case 3:
-					break;
-				case 4:
+				case STATEEND:
 					break;
 			}
 		}
 		
 		public function doorOpen(d:DoorModel):void {
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					state = 2;
 					doorOpened = 0;
 					break;
-				case 1:
+				case STATETRANSITION:
 					break;
-				case 2:
+				case STATEACTION:
 					state = 2;
 					doorOpened++;
 					break;
-				case 3:
-					break;
-				case 4:
+				case STATEEND:
 					break;
 			}
 			var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN);
@@ -179,23 +175,22 @@
 		}
 		
 		public function doorClose(e:DoorEvent):void {
+			trace("close");
 			switch(state) {
-				case 0:
+				case STATEIDLE:
 					break;
-				case 1:
+				case STATETRANSITION:
 					break;
-				case 2:
+				case STATEACTION:
 					doorOpened--;
-					if (doorOpened > 0) {
-						state = 2;
-					} else {
+					if (doorManager.isAllDoorsClosed()) {
 						state = 0;
+					} else {
+						state = 2;
 					}
 					
 					break;
-				case 3:
-					break;
-				case 4:
+				case STATEEND:
 					break;
 			}
 		}
