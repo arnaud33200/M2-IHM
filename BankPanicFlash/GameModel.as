@@ -46,6 +46,7 @@
 		
 		public function shootDoor(n:int):void {
 			doorManager.shootAtTheDoor(n);
+			dispatchEvent(new GameEvent(GameEvent.DOOR_SHOOTED, n));
 			// tell the view that a shoot has to be animated !!!
 		}
 		
@@ -53,10 +54,10 @@
 			transition.start();
 			if (d == GOLEFT) {
 				doorManager.moveDoorWindowLeft();
-				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_LEFT));
+				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_LEFT,0));
 			} else {
 				doorManager.moveDoorWindowRight();
-				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_RIGHT));
+				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_RIGHT,0));
 			}
 		}
 		
@@ -146,7 +147,10 @@
 					state = 1;
 					break;
 				case STATEACTION:
-					//trace("IMPOSSSIBLE, ACTION TIME !!! " + doorOpened + " - " + doorManager.isAllDoorsClosed() );
+					/*if (doorOpened <= 0) {
+						state = 1;
+					}*/
+					trace("IMPOSSSIBLE, ACTION TIME !!! " + doorOpened + " - " + doorManager.isAllDoorsClosed() );
 					break;
 				case STATEEND:
 					break;
@@ -157,7 +161,7 @@
 			switch(state) {
 				case STATEIDLE:
 					state = 2;
-					doorOpened = 0;
+					doorOpened = 1;
 					break;
 				case STATETRANSITION:
 					break;
@@ -168,14 +172,14 @@
 				case STATEEND:
 					break;
 			}
-			var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN);
+			var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN,0);
 			e.numberOpen = doorManager.doorLogicNumber(d.number);
 			e.door = d;
 			dispatchEvent(e);
 		}
 		
 		public function doorClose(e:DoorEvent):void {
-			trace("close");
+			trace("close : " + doorOpened);
 			switch(state) {
 				case STATEIDLE:
 					break;
@@ -183,7 +187,8 @@
 					break;
 				case STATEACTION:
 					doorOpened--;
-					if (doorManager.isAllDoorsClosed()) {
+					//if (doorManager.isAllDoorsClosed()) {
+					if (doorOpened) {
 						state = 0;
 					} else {
 						state = 2;

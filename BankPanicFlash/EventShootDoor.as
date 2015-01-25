@@ -9,7 +9,7 @@
 		public var door:int;
 
 		public function EventShootDoor(type:String, d:int) {
-			super(type, bubbles, cancelable);
+			super(type, false, false);
 			door = d;
 		}
 

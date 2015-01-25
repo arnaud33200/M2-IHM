@@ -14,19 +14,19 @@
 		public static const PERSONBAD:int = 1;
 		
 		public static const STATECLOSE:int = 0;
-		public static const STATECLOSEACTION:int = 0;
 		public static const STATECOMING:int = 1;
 		public static const STATEREADY:int = 2;
 		public static const STATEOPENGOOD:int = 30;
 		public static const STATEACTIONGOOD:int = 40;
 		public static const STATEOPENBAD:int = 31;
 		public static const STATEACTIONBAD:int = 41;
+		public static const STATECLOSEACTION:int = 5;
 		
-		public var state:int;
+		public var doorState:int;
 		
 		public static const DOOROPENINGTIME:int = 1000;
-		public static const DOORCLOSINGTIME:int = 200;
 		public static const DOORACTIONTIME:int = 1000;
+		public static const DOORCLOSINGTIME:int = 200;
 		
 		public var number:int;
 		public var speed:int;
@@ -41,14 +41,14 @@
 		private var doorManager:DoorManager;
 		
 		public function DoorModel(n:int, d:DoorManager) {
-			state = STATECLOSE;
+			doorState = STATECLOSE;
 			number = n;
 			doorManager = d;
 			
 			openTimer = new Timer(DOOROPENINGTIME, 1);
 			openTimer.addEventListener(TimerEvent.TIMER, doorActionBegin);
 			closeTimer = new Timer(DOORCLOSINGTIME, 1);
-			closeTimer.addEventListener(TimerEvent.TIMER, doorCloseBegin);
+			closeTimer.addEventListener(TimerEvent.TIMER, doorCloseEnd);
 			actionTimer = new Timer(DOORACTIONTIME, 1);
 			actionTimer.addEventListener(TimerEvent.TIMER, actionIsOver);
 		}
@@ -70,9 +70,9 @@
 		
 		public function someoneComing():void {
 
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
-					state = STATECOMING;
+					doorState = STATECOMING;
 					doComing();
 					break;
 				case STATECOMING: 
@@ -94,11 +94,11 @@
 		
 		public function doorIsReady(e:TimerEvent):void{
 			
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
 					break;
 				case STATECOMING:
-					state = STATEREADY;
+					doorState = STATEREADY;
 					person = (Math.floor(Math.random() * (1 - 0 + 1)) + 0);
 					doorManager.doorIsReady(this);
 					break;
@@ -119,7 +119,7 @@
 		
 		public function startDoorOpening():void {
 
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
 					break;
 				case STATECOMING: 
@@ -127,10 +127,10 @@
 				case STATEREADY:
 					if (person == PERSONGOOD) {
 						trace("["+ number + "] GOOD - door open");
-						state = STATEOPENGOOD;
+						doorState = STATEOPENGOOD;
 					} else {
 						trace("["+ number + "] BAD - door open");
-						state = STATEOPENBAD;
+						doorState = STATEOPENBAD;
 					}
 					openTimer.start();
 					break;
@@ -148,7 +148,7 @@
 		}
 		
 		public function doorActionBegin(e:TimerEvent):void {		
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
 					break;
 				case STATECOMING: 
@@ -156,13 +156,13 @@
 				case STATEREADY: 
 					break;
 				case STATEOPENGOOD:
-					state = STATEACTIONGOOD;
+					doorState = STATEACTIONGOOD;
 					actionTimer.start();
 					break;
 				case STATEACTIONGOOD: 
 					break;
 				case STATEOPENBAD:
-					state = STATEACTIONBAD;
+					doorState = STATEACTIONBAD;
 					actionTimer.start();
 					break;
 				case STATEACTIONBAD: 
@@ -175,34 +175,42 @@
 		public function shootReceived():void {
 			//trace ("[" + number + "] - SHOOT");
 			
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
+					doorState = STATECLOSE;
 					break;
-				case STATECOMING: 
+				case STATECOMING:
+					doorState = STATECOMING;
 					break;
 				case STATEREADY: 
+					doorState = STATEREADY;
 					break;
 				case STATEOPENGOOD: 
-					state = STATECLOSE;
+					doorState = STATECLOSE;
 					dispatchEvent(new DoorEvent(DoorEvent.WRONG_TARGET, this));
+					openTimer.stop();
 					break;
 				case STATEACTIONGOOD: 
 					dispatchEvent(new DoorEvent(DoorEvent.WRONG_TARGET, this));
-					state = STATECLOSE;
+					doorState = STATECLOSE;
+					actionTimer.stop();
 					break;
 				case STATEOPENBAD: 
-					//dispatchEvent(new DoorEvent(DoorEvent.TOO_EARLY, this));
-					trace("BOOM");
-					state = STATECLOSEACTION;
+					doorState = STATECLOSEACTION;
+					dispatchEvent(new DoorEvent(DoorEvent.TOO_EARLY, this));
+					trace("boom");
 					closeTimer.start();
+					openTimer.stop();
 					break;
 				case STATEACTIONBAD:
-					state = STATECLOSEACTION;
+					doorState = STATECLOSEACTION;
 					closeTimer.start();
-					//dispatchEvent(new DoorEvent(DoorEvent.GOOD_SHOOT, this));
+					dispatchEvent(new DoorEvent(DoorEvent.GOOD_SHOOT, this));
+					actionTimer.stop();
 					trace("BOOM");
 					break;
-				case STATECLOSEACTION: 
+				case STATECLOSEACTION:
+					doorState = STATECLOSEACTION;
 					break;
 			}
 		}
@@ -210,7 +218,7 @@
 		public function actionIsOver(e:TimerEvent):void {
 			//doorManager.doorActionIsOver(this);
 			
-			switch (state) {
+			switch (doorState) {
 				case STATECLOSE:
 					break;
 				case STATECOMING: 
@@ -220,14 +228,14 @@
 				case STATEOPENGOOD: 
 					break;
 				case STATEACTIONGOOD:
-					state = STATECLOSEACTION;
+					doorState = STATECLOSEACTION;
 					closeTimer.start();
-					//dispatchEvent(new DoorEvent(DoorEvent.MONEY, this));
+					dispatchEvent(new DoorEvent(DoorEvent.MONEY, this));
 					break;
 				case STATEOPENBAD: 
 					break;
 				case STATEACTIONBAD:
-					state = STATECLOSE;
+					doorState = STATECLOSE;
 					dispatchEvent(new DoorEvent(DoorEvent.TOO_LATE, this));
 					break;
 				case STATECLOSEACTION: 
@@ -235,8 +243,8 @@
 			}
 		}
 		
-		public function doorCloseBegin(e:TimerEvent):void {		
-			switch (state) {
+		public function doorCloseEnd(e:TimerEvent):void {		
+			switch (doorState) {
 				case STATECLOSE:
 					break;
 				case STATECOMING: 
@@ -253,7 +261,7 @@
 					break;
 				case STATECLOSEACTION: 
 					trace("close asked");
-					state = STATECLOSE;
+					doorState = STATECLOSE;
 					dispatchEvent(new DoorEvent(DoorEvent.CLOSING_END, this));
 					break;
 			}
