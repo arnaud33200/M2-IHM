@@ -60,6 +60,7 @@
 				case 2: speed = SPEED2; break;
 				case 3: speed = SPEED3; break;
 			}
+			doorManager.someOneComing(this);
 			comingTimer = new Timer(speed, 1);
 			comingTimer.addEventListener(TimerEvent.TIMER, doorIsReady);
 			comingTimer.start();
@@ -126,10 +127,10 @@
 					break;
 				case STATEREADY:
 					if (person == PERSONGOOD) {
-						trace("["+ number + "] GOOD - door open");
+						//trace("["+ number + "] GOOD - door open");
 						doorState = STATEOPENGOOD;
 					} else {
-						trace("["+ number + "] BAD - door open");
+						//trace("["+ number + "] BAD - door open");
 						doorState = STATEOPENBAD;
 					}
 					openTimer.start();
@@ -198,7 +199,7 @@
 				case STATEOPENBAD: 
 					doorState = STATECLOSEACTION;
 					dispatchEvent(new DoorEvent(DoorEvent.TOO_EARLY, this));
-					trace("boom");
+					//trace("boom");
 					closeTimer.start();
 					openTimer.stop();
 					break;
@@ -207,7 +208,7 @@
 					closeTimer.start();
 					dispatchEvent(new DoorEvent(DoorEvent.GOOD_SHOOT, this));
 					actionTimer.stop();
-					trace("BOOM");
+					//trace("BOOM");
 					break;
 				case STATECLOSEACTION:
 					doorState = STATECLOSEACTION;
@@ -260,7 +261,7 @@
 				case STATEACTIONBAD: 
 					break;
 				case STATECLOSEACTION: 
-					trace("close asked");
+					//trace("close asked");
 					doorState = STATECLOSE;
 					dispatchEvent(new DoorEvent(DoorEvent.CLOSING_END, this));
 					break;

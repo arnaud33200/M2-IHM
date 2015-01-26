@@ -34,6 +34,14 @@
 			newComingTimer.start();
 		}
 		
+		public function getDoorWindow():Array {
+			return doorWindow;
+		}
+		
+		public function someOneComing(d:DoorModel) {
+			model.someOneComing(d);
+		}
+		
 		public function isAllDoorsClosed():Boolean {
 			var rtn:Boolean = true;
 			var msg:String = "";
@@ -69,7 +77,7 @@
 			model.doorClose(e);
 		}
 		private function money(e:DoorEvent):void {
-			trace("[" + e.door.number + "] MONEY !!!");
+			model.moneyReceived(e.door.number);
 			model.doorClose(e);
 		}
 		// bad action
@@ -95,7 +103,7 @@
 				door.doorState == DoorModel.STATEACTIONBAD ||
 				door.doorState == DoorModel.STATEOPENGOOD ||
 				door.doorState == DoorModel.STATEACTIONGOOD) {
-					trace ("[" + n + "] - SHOOT");
+					//trace ("[" + n + "] - SHOOT");
 					door.shootReceived();
 				}
 		}
@@ -148,7 +156,7 @@
 		}
 		
 		public function checkDoorReady():void {
-			trace(".... CHECK if ready");
+			//trace(".... CHECK if ready");
 			if (doors[doorWindow[0]].doorState == DoorModel.STATEREADY) {
 				doors[doorWindow[0]].startDoorOpening()
 				model.doorOpen(doors[doorWindow[0]]);

@@ -28,10 +28,15 @@
 		private var transition:Timer;
 		private var doorOpened:int;
 		
+		public var goldCollected:Array;
+		
 		private var doorManager:DoorManager;
 		
 		public function GameModel() {
-			
+			goldCollected = new Array(12);
+			for each (var g:int in goldCollected) {
+				g = 0;
+			}
 			doorManager = new DoorManager(this);
 			doorOpened = 0;
 			state=0;
@@ -44,6 +49,12 @@
 			transition.addEventListener(TimerEvent.TIMER, transitionFinished);
 		}
 		
+		public function someOneComing(d:DoorModel) {
+			var evt:GameEvent = new GameEvent(GameEvent.DOOR_COMING, d.number);
+			evt.door = d;
+			dispatchEvent(evt);
+		}
+		
 		public function shootDoor(n:int):void {
 			doorManager.shootAtTheDoor(n);
 			dispatchEvent(new GameEvent(GameEvent.DOOR_SHOOTED, n));
@@ -51,14 +62,22 @@
 		}
 		
 		public function changeDoorWindow(d:int):void {
+			var evt:GameEvent;
 			transition.start();
 			if (d == GOLEFT) {
 				doorManager.moveDoorWindowLeft();
-				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_LEFT,0));
+				evt = new GameEvent(GameEvent.DOORS_MOVING_LEFT,0)
 			} else {
 				doorManager.moveDoorWindowRight();
-				dispatchEvent(new GameEvent(GameEvent.DOORS_MOVING_RIGHT,0));
+				evt = new GameEvent(GameEvent.DOORS_MOVING_RIGHT,0)
 			}
+			evt.window = doorManager.getDoorWindow();
+			dispatchEvent(evt);
+		}
+		
+		public function moneyReceived(n:int):void {
+			goldCollected[n]++;
+			dispatchEvent(new GameEvent(GameEvent.DOOR_MONEY, n));
 		}
 		
 		public function gameWin(e:DoorEvent):void {
@@ -84,19 +103,23 @@
 			switch(state) {
 				case STATEIDLE:
 					state = 3;
+					trace ("TIME's UP");
 					wait.stop();
 					//gameLoose();
 					break;
 				case STATETRANSITION:
 					state = 3;
+					trace ("TIME's UP");
 					//gameLoose();
 					break;
 				case STATEACTION:
 					state = 3;
+					trace ("TIME's UP");
 					//gameLoose();
 					break;
 				case STATEEND:
 					state = 3;
+					trace ("TIME's UP");
 					//gameLoose();
 					break;
 			}
@@ -150,7 +173,7 @@
 					/*if (doorOpened <= 0) {
 						state = 1;
 					}*/
-					trace("IMPOSSSIBLE, ACTION TIME !!! " + doorOpened + " - " + doorManager.isAllDoorsClosed() );
+					//trace("IMPOSSSIBLE, ACTION TIME !!! " + doorOpened + " - " + doorManager.isAllDoorsClosed() );
 					break;
 				case STATEEND:
 					break;
@@ -172,14 +195,16 @@
 				case STATEEND:
 					break;
 			}
-			var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN,0);
-			e.numberOpen = doorManager.doorLogicNumber(d.number);
-			e.door = d;
-			dispatchEvent(e);
+			if (state == STATEIDLE || state == STATEACTION) {
+				var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN,0);
+				e.numberOpen = doorManager.doorLogicNumber(d.number);
+				e.door = d;
+				dispatchEvent(e);
+			}
 		}
 		
 		public function doorClose(e:DoorEvent):void {
-			trace("close : " + doorOpened);
+			//trace("close : " + doorOpened);
 			switch(state) {
 				case STATEIDLE:
 					break;

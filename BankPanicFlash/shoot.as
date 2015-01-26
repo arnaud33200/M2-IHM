@@ -8,11 +8,11 @@
 		
 		public function shoot(n:int) {
 			switch (n) {
-				case 0: this.x = 200; break;
-				case 1: this.x = 500; break;
-				case 2: this.x = 700; break;
+				case 0: this.x = 112; break;
+				case 1: this.x = 363; break;
+				case 2: this.x = 614; break;
 			}
-			this.y = 400
+			this.y = 304
 		}
 	}
 	
