@@ -26,21 +26,28 @@
 		
 		public static const DOOROPENINGTIME:int = 1000;
 		public static const DOORACTIONTIME:int = 1000;
-		public static const DOORCLOSINGTIME:int = 200;
+		public static const DOORACTIONTIMECOUNTER:int = 10;
+		public static const DOORCLOSINGTIME:int = 500;
+		
+		private var timeCounter:int;
 		
 		public var number:int;
 		public var speed:int;
 		public var person:int;
+		public var score:int;
 		
 		private var comingTimer:Timer;
 		private var openTimer:Timer;
 		private var closeTimer:Timer;
 		// the time taken by the good or the bad
 		private var actionTimer:Timer;
+		private var actionTimerCounter:Timer;
 		
 		private var doorManager:DoorManager;
 		
 		public function DoorModel(n:int, d:DoorManager) {
+			timeCounter = 0;
+			score = 0;
 			doorState = STATECLOSE;
 			number = n;
 			doorManager = d;
@@ -51,6 +58,13 @@
 			closeTimer.addEventListener(TimerEvent.TIMER, doorCloseEnd);
 			actionTimer = new Timer(DOORACTIONTIME, 1);
 			actionTimer.addEventListener(TimerEvent.TIMER, actionIsOver);
+			actionTimerCounter = new Timer(DOORACTIONTIMECOUNTER, 0);
+			actionTimerCounter.addEventListener(TimerEvent.TIMER, actionCounter);
+		}
+		
+		public function changeCloseTimer(t:int):void {
+			closeTimer = new Timer(t, 1);
+			closeTimer.addEventListener(TimerEvent.TIMER, doorCloseEnd);
 		}
 		
 		public function doComing():void {
@@ -64,6 +78,23 @@
 			comingTimer = new Timer(speed, 1);
 			comingTimer.addEventListener(TimerEvent.TIMER, doorIsReady);
 			comingTimer.start();
+		}
+		
+		public function scoreGoodShoot() {
+			actionTimerCounter.stop();
+			actionTimer.stop();
+			score = 100;
+			if (timeCounter <= 20) { score = 1000; }
+			else if (timeCounter <= 40) { score = 800; }
+			else if (timeCounter <= 80) { score = 400; }
+			
+			var evt:DoorEvent = new DoorEvent(DoorEvent.GOOD_SHOOT, this);
+			dispatchEvent(evt);
+			timeCounter = 0;
+		}
+		
+		public function actionCounter(e:TimerEvent):void{
+			timeCounter += 1;
 		}
 		
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,6 +196,7 @@
 				case STATEOPENBAD:
 					doorState = STATEACTIONBAD;
 					actionTimer.start();
+					actionTimerCounter.start();
 					break;
 				case STATEACTIONBAD: 
 					break;
@@ -198,16 +230,19 @@
 					break;
 				case STATEOPENBAD: 
 					doorState = STATECLOSEACTION;
-					dispatchEvent(new DoorEvent(DoorEvent.TOO_EARLY, this));
-					//trace("boom");
+					// set new timer
+					changeCloseTimer(DOORCLOSINGTIME+1000);
 					closeTimer.start();
+					score = 100;
+					dispatchEvent(new DoorEvent(DoorEvent.TOO_EARLY, this));
 					openTimer.stop();
 					break;
 				case STATEACTIONBAD:
 					doorState = STATECLOSEACTION;
+					// set new timer
+					changeCloseTimer(DOORCLOSINGTIME+1000);
 					closeTimer.start();
-					dispatchEvent(new DoorEvent(DoorEvent.GOOD_SHOOT, this));
-					actionTimer.stop();
+					scoreGoodShoot();
 					//trace("BOOM");
 					break;
 				case STATECLOSEACTION:
@@ -262,6 +297,8 @@
 					break;
 				case STATECLOSEACTION: 
 					//trace("close asked");
+					// set timer as normal
+					changeCloseTimer(DOORCLOSINGTIME);
 					doorState = STATECLOSE;
 					dispatchEvent(new DoorEvent(DoorEvent.CLOSING_END, this));
 					break;

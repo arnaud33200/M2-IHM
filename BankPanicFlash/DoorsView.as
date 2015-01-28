@@ -11,22 +11,28 @@
 		private var ml:MovingDoorsLeft;
 		private var sd:StaticDoors;
 		
-		private var n1:TextField;
-		private var n2:TextField;
-		private var n3:TextField;
+		private var doors:Array;
 		
 		private var sp:shoot;
 		
 		public function DoorsView(m:GameModel) {
+			doors = new Array(3);
 			model = m;
 			model.addEventListener(GameEvent.DOORS_MOVING_LEFT, moveLeft);
 			model.addEventListener(GameEvent.DOORS_MOVING_RIGHT, moveRight);
 			model.addEventListener(GameEvent.DOOR_OPEN, doorOpen);
 			model.addEventListener(GameEvent.DOOR_SHOOTED, doorShooted);
+			model.addEventListener(GameEvent.BAD_SHOOTED, badShooted);
 			sd = new StaticDoors(5,9,8);
 			addChild(sd);
 			
-			n1 = new TextField();
+			//n1 = new TextField();
+		}
+		
+				
+		function badShooted(e:GameEvent):void {
+			var d:Door = doors[e.numberOpen];
+			d.badShooted(e);
 		}
 		
 		function doorShooted(e:GameEvent):void {
@@ -36,10 +42,11 @@
 		}
 		
 		function doorOpen(e:GameEvent):void {
-			var m:Door = new Door(e.door.person, e.numberOpen);
-			m.gotoAndPlay(1);
+			var d:Door = new Door(e.door.person, e.numberOpen);
+			doors[e.numberOpen] = d;
+			d.gotoAndPlay(1);
 			this.gotoAndPlay(1);
-			addChild(m);
+			addChild(d);
 		}
 		
 		function moveLeft(e:GameEvent):void {

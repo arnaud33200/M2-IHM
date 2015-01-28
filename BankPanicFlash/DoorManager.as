@@ -6,7 +6,7 @@
 	
 	public class DoorManager {
 
-		public static var timePeriod = 500;
+		public static var timePeriod = 200;
 		
 		private var doors:Array;
 		private var doorWindow:Array;
@@ -47,12 +47,13 @@
 			var msg:String = "";
 			for (var i:int = 0; i < 3; i++) {
 				var c:DoorModel = doors[doorWindow[i]];
-				if (c.doorState != DoorModel.STATECLOSE ) {
+				if (c.doorState != DoorModel.STATECLOSE && 
+					c.doorState != DoorModel.STATECOMING) {
 					rtn = false;
 					msg += c.number + " - ";
 				}
 			}
-			trace("Not Closed : " + msg);
+			//trace("Not Closed : " + msg);
 			return rtn;
 		}
 		
@@ -70,10 +71,12 @@
 		
 		private function too_early(e:DoorEvent):void {
 			trace("[" + e.door.number + "] too early !!!");
+			model.badShooted(e.door);
 			model.doorClose(e);
 		}
 		private function good_shoot(e:DoorEvent):void {
 			trace("[" + e.door.number + "] BOOM NICE SHOT !!!");
+			model.badShooted(e.door);
 			model.doorClose(e);
 		}
 		private function money(e:DoorEvent):void {

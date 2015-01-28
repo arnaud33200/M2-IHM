@@ -29,10 +29,14 @@
 		private var doorOpened:int;
 		
 		public var goldCollected:Array;
+		public var score:int;
+		public var life:int;
 		
 		private var doorManager:DoorManager;
 		
 		public function GameModel() {
+			score = 0;
+			life = 3;
 			goldCollected = new Array(12);
 			for each (var g:int in goldCollected) {
 				g = 0;
@@ -40,7 +44,7 @@
 			doorManager = new DoorManager(this);
 			doorOpened = 0;
 			state=0;
-			gameTime = new Timer(60000, 1);
+			gameTime = new Timer(180000, 1);
 			gameTime.addEventListener(TimerEvent.TIMER, timeIsUp);
 			gameTime.start();
 			wait = new Timer(200,1);
@@ -77,7 +81,22 @@
 		
 		public function moneyReceived(n:int):void {
 			goldCollected[n]++;
+			addScore(100);
 			dispatchEvent(new GameEvent(GameEvent.DOOR_MONEY, n));
+		}
+		
+		public function addScore(s:int):void {
+			score += s;
+			trace("(" + s + ") - Score = " + score);
+			
+		}
+		
+		public function badShooted(d:DoorModel):void {
+			addScore(d.score);
+			var evt:GameEvent = new GameEvent(GameEvent.BAD_SHOOTED, 0);
+			evt.numberOpen = doorManager.doorLogicNumber(d.number);
+			evt.door = d;
+			dispatchEvent(evt);
 		}
 		
 		public function gameWin(e:DoorEvent):void {
@@ -212,8 +231,7 @@
 					break;
 				case STATEACTION:
 					doorOpened--;
-					//if (doorManager.isAllDoorsClosed()) {
-					if (doorOpened) {
+					if (doorManager.isAllDoorsClosed()) {
 						state = 0;
 					} else {
 						state = 2;
