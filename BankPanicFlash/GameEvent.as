@@ -18,6 +18,8 @@
 		public static const GAMEOVER_TOO_LATE:String = "gameovertoolate";
 		public static const GAMEOVER_TIME:String = "gameovertime";
 		
+		public static const ROUND_WIN:String = "roundwin";
+		
 		public var numberOpen:int;
 		public var door:DoorModel;
 		public var window:Array;

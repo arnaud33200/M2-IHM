@@ -6,7 +6,7 @@
 	public class shoot extends MovieClip {
 		
 		
-		public function shoot(n:int) {
+		public function shoot(n:int = -1) {
 			switch (n) {
 				case 0: this.x = 112; break;
 				case 1: this.x = 363; break;
@@ -14,6 +14,7 @@
 			}
 			this.y = 304
 		}
+
 	}
 	
 }

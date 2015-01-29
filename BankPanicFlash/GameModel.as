@@ -31,15 +31,17 @@
 		public var goldCollected:Array;
 		public var score:int;
 		public var life:int;
+		public var roundNumber:int;
 		
 		private var doorManager:DoorManager;
 		
 		public function GameModel() {
 			score = 0;
 			life = 3;
+			roundNumber = 1;
 			goldCollected = new Array(12);
-			for each (var g:int in goldCollected) {
-				g = 0;
+			for (var i:int = 0; i<12; i++) {
+				goldCollected[i] = 0;
 			}
 			doorManager = new DoorManager(this);
 			doorOpened = 0;
@@ -51,6 +53,24 @@
 			wait.addEventListener(TimerEvent.TIMER, waitFinished);
 			transition = new Timer(800,1);
 			transition.addEventListener(TimerEvent.TIMER, transitionFinished);
+		}
+		
+		public function gamePause() {
+			state = STATEEND;
+			doorManager.gamePause();
+		}
+		
+		public function GameResume() {
+			state = STATEIDLE;
+			doorManager.gameResume();
+		}
+		
+		public function GameReset() {
+			state = STATEEND;
+			for (var i:int=0; i<12; i++) {
+				goldCollected[i] = 0;
+			}
+			doorManager.gamePause();
 		}
 		
 		public function someOneComing(d:DoorModel) {
@@ -83,6 +103,22 @@
 			goldCollected[n]++;
 			addScore(100);
 			dispatchEvent(new GameEvent(GameEvent.DOOR_MONEY, n));
+			checkForWin();
+		}
+		
+		public function checkForWin() {
+			var count:int = 0;
+			for (var i:int=0; i<12; i++) {
+				if (goldCollected[i] > 0) {
+					count++;
+				}
+			}
+			if (count >= 12) {
+				GameReset();
+				roundNumber++;
+				life++;
+				dispatchEvent(new GameEvent(GameEvent.ROUND_WIN, 0));
+			}
 		}
 		
 		public function addScore(s:int):void {
@@ -103,9 +139,25 @@
 			
 		}
 		
-		public function gameLoose(e:DoorEvent):void {
-			trace("GAME LOOSE");
-			doorClose(e);
+		public function gameLooseWrong(e:DoorEvent):void {
+			if (state == STATEEND) {
+				return;
+			}
+			trace("GAME LOOSE Wrong");
+			life--;
+			gamePause();
+			var evt:GameEvent = new GameEvent(GameEvent.GAMEOVER_WRONG, 0);
+			dispatchEvent(evt);
+		}
+		
+		public function gameLooseTooLate(e:DoorEvent):void {
+			if (state == STATEEND) {
+				return;
+			}
+			trace("GAME LOOSE Too Late");
+			life--;
+			var evt:GameEvent = new GameEvent(GameEvent.GAMEOVER_TOO_LATE, 0);
+			dispatchEvent(evt);
 		}
 		
 		// when the user decide to choice 3 doors

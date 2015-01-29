@@ -50,6 +50,9 @@
 				dv.y = 8;
 				dv.x = -330 + (k * 60);
 				dv.gotoAndStop(1);
+				if (model.goldCollected[k] > 0) {
+					dv.gotoAndStop(15);
+				}
 				addChild(dv);
 				doorDollarsViews[k] = dv;
 			}
@@ -70,7 +73,6 @@
 		function doorMoney(e:GameEvent):void {
 			var n:int = e.numberOpen;
 			var dv:MovieClip = doorDollarsViews[n];
-			//trace("Fram number = " + dv.framesLoaded);
 			dv.gotoAndPlay(1);
 		}
 		

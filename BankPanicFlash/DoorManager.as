@@ -34,6 +34,26 @@
 			newComingTimer.start();
 		}
 		
+		public function gamePause() {
+			doorWindow = [0,1,2];
+			newComingTimer.stop();
+			for (var i:int=0; i<12; i++){
+				var d:DoorModel = new DoorModel(i, this);
+				d.doorState = DoorModel.STATECLOSE;
+				d.addEventListener(DoorEvent.TOO_EARLY, too_early);
+				d.addEventListener(DoorEvent.TOO_LATE, too_late);
+				d.addEventListener(DoorEvent.GOOD_SHOOT, good_shoot);
+				d.addEventListener(DoorEvent.MONEY, money);
+				d.addEventListener(DoorEvent.WRONG_TARGET, wrong_target);
+				d.addEventListener(DoorEvent.CLOSING_END, closing_end);
+				doors[i] = d;
+			}
+		}
+		
+		public function gameResume() {
+			newComingTimer.start();
+		}
+		
 		public function getDoorWindow():Array {
 			return doorWindow;
 		}
@@ -42,6 +62,8 @@
 			model.someOneComing(d);
 		}
 		
+	// after moving door window, check if one of the three doors
+	// is open and then begin the action
 		public function isAllDoorsClosed():Boolean {
 			var rtn:Boolean = true;
 			var msg:String = "";
@@ -53,7 +75,6 @@
 					msg += c.number + " - ";
 				}
 			}
-			//trace("Not Closed : " + msg);
 			return rtn;
 		}
 		
@@ -87,12 +108,12 @@
 		private function too_late(e:DoorEvent):void {
 			trace("[" + e.door.number + "] TOO LATE !!!");
 			model.doorClose(e);
-			model.gameLoose(e);
+			model.gameLooseTooLate(e);
 		}
 		private function wrong_target(e:DoorEvent):void {
 			trace("[" + e.door.number + "] WRONG !!!");
 			model.doorClose(e);
-			model.gameLoose(e);
+			model.gameLooseWrong(e);
 		}
 		private function closing_end(e:DoorEvent):void {
 			model.doorClose(e);
