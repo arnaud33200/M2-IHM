@@ -48,7 +48,7 @@
 			state=0;
 			gameTime = new Timer(180000, 1);
 			gameTime.addEventListener(TimerEvent.TIMER, timeIsUp);
-			gameTime.start();
+			//gameTime.start();
 			wait = new Timer(200,1);
 			wait.addEventListener(TimerEvent.TIMER, waitFinished);
 			transition = new Timer(800,1);
@@ -156,6 +156,7 @@
 			}
 			trace("GAME LOOSE Too Late");
 			life--;
+			gamePause();
 			var evt:GameEvent = new GameEvent(GameEvent.GAMEOVER_TOO_LATE, 0);
 			dispatchEvent(evt);
 		}
@@ -165,6 +166,13 @@
 		private function waitFinished (e:TimerEvent):void{
 			wait.stop();
 			doorManager.checkDoorReady();
+		}
+		
+		public function doorBeginOpen(d:DoorModel):void {
+			var evtact:GameEvent = new GameEvent(GameEvent.DOOR_OPEN,0);
+			evtact.numberOpen = doorManager.doorLogicNumber(d.number);
+			evtact.door = d;
+			dispatchEvent(evtact);
 		}
 		
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -252,6 +260,7 @@
 		}
 		
 		public function doorOpen(d:DoorModel):void {
+			
 			switch(state) {
 				case STATEIDLE:
 					state = 2;
@@ -266,22 +275,18 @@
 				case STATEEND:
 					break;
 			}
-			if (state == STATEIDLE || state == STATEACTION) {
-				var e:GameEvent = new GameEvent(GameEvent.DOOR_OPEN,0);
-				e.numberOpen = doorManager.doorLogicNumber(d.number);
-				e.door = d;
-				dispatchEvent(e);
-			}
 		}
 		
 		public function doorClose(e:DoorEvent):void {
 			//trace("close : " + doorOpened);
+			
 			switch(state) {
 				case STATEIDLE:
 					break;
 				case STATETRANSITION:
 					break;
 				case STATEACTION:
+				trace("<<<<<<<< CLOSE");
 					doorOpened--;
 					if (doorManager.isAllDoorsClosed()) {
 						state = 0;

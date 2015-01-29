@@ -42,6 +42,8 @@
 		// the time taken by the good or the bad
 		private var actionTimer:Timer;
 		private var actionTimerCounter:Timer;
+	//timer pour corriger le 0.5 temps de delay pour l'animation
+		private var delayOpenTimer
 		
 		private var doorManager:DoorManager;
 		
@@ -60,6 +62,13 @@
 			actionTimer.addEventListener(TimerEvent.TIMER, actionIsOver);
 			actionTimerCounter = new Timer(DOORACTIONTIMECOUNTER, 0);
 			actionTimerCounter.addEventListener(TimerEvent.TIMER, actionCounter);
+			delayOpenTimer = new Timer(500, 1);
+			delayOpenTimer.addEventListener(TimerEvent.TIMER, delayopen);
+		}
+		
+		public function doorPause() {
+			doorState = STATECLOSE;
+
 		}
 		
 		public function changeCloseTimer(t:int):void {
@@ -124,6 +133,18 @@
 			}
 		}
 		
+		public function delayopen(e:TimerEvent):void {
+			if (person == PERSONGOOD) {
+						trace("["+ number + "] GOOD - door open");
+						doorState = STATEOPENGOOD;
+					} else {
+						trace("["+ number + "] BAD - door open");
+						doorState = STATEOPENBAD;
+					}
+			doorManager.doorIsOpen(this);
+			openTimer.start();
+		}
+		
 		public function doorIsReady(e:TimerEvent):void{
 			
 			switch (doorState) {
@@ -157,14 +178,8 @@
 				case STATECOMING: 
 					break;
 				case STATEREADY:
-					if (person == PERSONGOOD) {
-						//trace("["+ number + "] GOOD - door open");
-						doorState = STATEOPENGOOD;
-					} else {
-						//trace("["+ number + "] BAD - door open");
-						doorState = STATEOPENBAD;
-					}
-					openTimer.start();
+					doorManager.beginOpenDoor(this);
+					delayOpenTimer.start();
 					break;
 				case STATEOPENGOOD: 
 					break;

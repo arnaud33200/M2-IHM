@@ -42,11 +42,10 @@
 		}
 		
 		function doorOpen(e:GameEvent):void {
-			var d:Door = new Door(e.door.person, e.numberOpen);
-			doors[e.numberOpen] = d;
-			d.gotoAndPlay(1);
-			this.gotoAndPlay(1);
-			addChild(d);
+			trace("---->");
+			doors[e.numberOpen] = new Door(e.door.person, e.numberOpen);
+			doors[e.numberOpen].gotoAndPlay(1);
+			addChild(doors[e.numberOpen]);
 		}
 		
 		function moveLeft(e:GameEvent):void {
