@@ -17,6 +17,7 @@
 		public static const GAMEOVER_WRONG:String = "gameoverwrong";
 		public static const GAMEOVER_TOO_LATE:String = "gameovertoolate";
 		public static const GAMEOVER_TIME:String = "gameovertime";
+		public static const GAME_NEW_SCORE:String = "gamenewscore";
 		
 		public static const ROUND_WIN:String = "roundwin";
 		

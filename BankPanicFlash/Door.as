@@ -11,6 +11,7 @@
 		private var t:Timer;
 		private var n:int;
 		private var red:Boolean;
+		private var chrono:BadTimeCounter;
 		
 		public function Door(k:int, n:int) {
 			red = false;
@@ -23,6 +24,10 @@
 		}
 		
 		public function badShooted(e:GameEvent):void {
+			if (chrono != null) {
+				chrono.stopTimer();
+			}
+			
 			removeChildren();
 			if (red) p = new BadRedShooted(e);
 			else p = new BadGreenShooted(e);

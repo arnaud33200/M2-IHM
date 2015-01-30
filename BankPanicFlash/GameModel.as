@@ -49,7 +49,7 @@
 			gameTime = new Timer(180000, 1);
 			gameTime.addEventListener(TimerEvent.TIMER, timeIsUp);
 			//gameTime.start();
-			wait = new Timer(200,1);
+			wait = new Timer(500,1);
 			wait.addEventListener(TimerEvent.TIMER, waitFinished);
 			transition = new Timer(800,1);
 			transition.addEventListener(TimerEvent.TIMER, transitionFinished);
@@ -62,6 +62,7 @@
 		
 		public function GameResume() {
 			state = STATEIDLE;
+			dispatchEvent(new GameEvent(GameEvent.GAME_NEW_SCORE,0));
 			doorManager.gameResume();
 		}
 		
@@ -124,6 +125,7 @@
 		public function addScore(s:int):void {
 			score += s;
 			trace("(" + s + ") - Score = " + score);
+			dispatchEvent(new GameEvent(GameEvent.GAME_NEW_SCORE,0));
 			
 		}
 		

@@ -26,7 +26,7 @@
 		
 		public static const DOOROPENINGTIME:int = 1000;
 		public static const DOORACTIONTIME:int = 1000;
-		public static const DOORACTIONTIMECOUNTER:int = 10;
+		public static const DOORACTIONTIMECOUNTER:int = 40;
 		public static const DOORCLOSINGTIME:int = 500;
 		
 		private var timeCounter:int;
@@ -93,10 +93,10 @@
 			actionTimerCounter.stop();
 			actionTimer.stop();
 			score = 100;
-			if (timeCounter <= 20) { score = 1000; }
-			else if (timeCounter <= 40) { score = 800; }
-			else if (timeCounter <= 80) { score = 400; }
-			
+			if (timeCounter <= 5) { score = 1000; }
+			else if (timeCounter <= 10) { score = 800; }
+			else if (timeCounter <= 15) { score = 400; }
+			trace("time kill: " + timeCounter);
 			var evt:DoorEvent = new DoorEvent(DoorEvent.GOOD_SHOOT, this);
 			dispatchEvent(evt);
 			timeCounter = 0;
