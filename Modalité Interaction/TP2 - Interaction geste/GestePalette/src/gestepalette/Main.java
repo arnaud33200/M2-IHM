@@ -12,17 +12,11 @@ import fr.dgac.ivy.IvyException;
 import fr.dgac.ivy.IvyMessageListener;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -50,7 +44,9 @@ public class Main extends javax.swing.JFrame{
      */
     public Main() {
         initComponents();
-        
+        myGesture = new Gesture();
+        formeView1.setShape(myGesture.circle);
+        formeView2.setShape(myGesture.rectangle);
         bindings = new HashMap<String, IvyMessageListener>();
         bus = new Ivy("TEST", "Hellooooo", null);
 
@@ -70,6 +66,22 @@ public class Main extends javax.swing.JFrame{
                 System.out.println(">>> - " + ic.getHostName() + " : " + m);
             }
         });
+    }
+    
+    private void drawRectangle(int x, int y, int w, int h, int back, int border ) {
+        try {
+            bus.sendMsg("Palette:CreerRectangle x=" + x + " y=" + y);
+        } catch (IvyException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void drawCircle(int x, int y, int w, int h, int back, int border ) {
+        try {
+            bus.sendMsg("Palette:CreerEllipse x=" + x + " y=" + y + "Longueur=" + w + " hauteur=" + h);
+        } catch (IvyException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -96,15 +108,14 @@ public class Main extends javax.swing.JFrame{
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        formeView1 = new gestepalette.FormeView();
+        formeView2 = new gestepalette.FormeView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,8 +147,6 @@ public class Main extends javax.swing.JFrame{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 296, Short.MAX_VALUE)
         );
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jButton2.setText("1");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -189,42 +198,16 @@ public class Main extends javax.swing.JFrame{
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
-        jPanel2.setPreferredSize(new java.awt.Dimension(125, 125));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
-        jPanel3.setPreferredSize(new java.awt.Dimension(125, 125));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 121, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 121, Short.MAX_VALUE)
-        );
-
         jButton1.setText("Print Consol");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jButton1MouseReleased(evt);
             }
         });
+
+        formeView1.setText("Circle");
+
+        formeView2.setText("Rectangle");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,6 +216,7 @@ public class Main extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,17 +226,12 @@ public class Main extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(formeView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(formeView2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -260,23 +239,18 @@ public class Main extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                        .addGap(140, 140, 140))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)
-                        .addComponent(jButton6)
-                        .addComponent(jButton7)
-                        .addComponent(jButton8))
+                        .addComponent(formeView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(formeView2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7)
+                    .addComponent(jButton8)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -286,14 +260,15 @@ public class Main extends javax.swing.JFrame{
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         myGesture = new Gesture();
-        jLabel1.setText("");
+        formeView1.setHighlight(false);
+        formeView2.setHighlight(false);
         Graphics g = evt.getComponent().getGraphics();
         g.setColor(Color.BLACK);
         g.fillOval(evt.getX()-5, evt.getY()-5, 11, 11);
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-        myGesture.collectNewPoint(new Point(evt.getX(), evt.getY()));
+        myGesture.collectNewPoint(new PointGeste((double)evt.getX(), (double)evt.getY()));
         
         Graphics g = evt.getComponent().getGraphics();
         g.setColor(Color.BLACK);
@@ -302,16 +277,24 @@ public class Main extends javax.swing.JFrame{
 
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
         myGesture.finishCollection();
-        jLabel1.setText(myGesture.forme);
+        
+        if (myGesture.forme == Gesture.SHAPECIRCLE) {
+            drawCircle(100, 100, 100, 100, 100, 100);
+            formeView1.setHighlight(true);
+        }
+        else if (myGesture.forme == Gesture.SHAPERECTANGLE) {
+            drawRectangle(100, 100, 100, 100, 100, 100);
+            formeView2.setHighlight(true);
+        } 
         repaint();
     }//GEN-LAST:event_jPanel1MouseReleased
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.blue);
-        ArrayList<Point> points = myGesture.getStep1points();
-        for (Point p : points) {
-            g.fillOval(p.x-3, p.y-3, 7, 7);
+        ArrayList<PointGeste> points = myGesture.getStep1points();
+        for (PointGeste p : points) {
+            g.fillOval((int)p.getX()-3, (int)p.getY()-3, 7, 7);
         }
     }//GEN-LAST:event_jButton2MousePressed
 
@@ -322,9 +305,9 @@ public class Main extends javax.swing.JFrame{
     private void jButton6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MousePressed
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.red);
-        ArrayList<Point> points = myGesture.getPoints();
-        for (Point p : points) {
-            g.fillOval(p.x-3, p.y-3, 7, 7);
+        ArrayList<PointGeste> points = myGesture.getPoints();
+        for (PointGeste p : points) {
+            g.fillOval((int)p.getX()-3, (int)p.getY()-3, 7, 7);
         }
     }//GEN-LAST:event_jButton6MousePressed
 
@@ -335,9 +318,9 @@ public class Main extends javax.swing.JFrame{
     private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.blue);
-        ArrayList<Point> points = myGesture.getStep2points();
-        for (Point p : points) {
-            g.fillOval(p.x-3, p.y-3, 7, 7);
+        ArrayList<PointGeste> points = myGesture.getStep2points();
+        for (PointGeste p : points) {
+            g.fillOval((int)p.getX()-3, (int)p.getY()-3, 7, 7);
         }
     }//GEN-LAST:event_jButton3MousePressed
 
@@ -348,9 +331,9 @@ public class Main extends javax.swing.JFrame{
     private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.blue);
-        ArrayList<Point> points = myGesture.getStep3points();
-        for (Point p : points) {
-            g.fillOval(p.x-3, p.y-3, 7, 7);
+        ArrayList<PointGeste> points = myGesture.getStep3points();
+        for (PointGeste p : points) {
+            g.fillOval((int)p.getX()-3, (int)p.getY()-3, 7, 7);
         }
     }//GEN-LAST:event_jButton7MousePressed
 
@@ -361,9 +344,9 @@ public class Main extends javax.swing.JFrame{
     private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
         Graphics g = jPanel1.getGraphics();
         g.setColor(Color.blue);
-        ArrayList<Point> points = myGesture.getStep4points();
-        for (Point p : points) {
-            g.fillOval(p.x-3, p.y-3, 7, 7);
+        ArrayList<PointGeste> points = myGesture.getStep4points();
+        for (PointGeste p : points) {
+                g.fillOval((int)p.getX()-3, (int)p.getY()-3, 7, 7);
         }
     }//GEN-LAST:event_jButton8MousePressed
 
@@ -374,8 +357,8 @@ public class Main extends javax.swing.JFrame{
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         if (myGesture != null) {
             System.out.println("=========================");
-            for (Point p : myGesture.getStep4points()) {
-                System.out.println(p.x + ";" + p.y);
+            for (PointGeste p : myGesture.getStep4points()) {
+                System.out.println(p.getX() + ";" + p.getY());
             }
         }
     }//GEN-LAST:event_jButton1MouseReleased
@@ -416,16 +399,15 @@ public class Main extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gestepalette.FormeView formeView1;
+    private gestepalette.FormeView formeView2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
 }
