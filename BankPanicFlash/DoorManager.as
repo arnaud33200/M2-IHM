@@ -6,7 +6,7 @@
 	
 	public class DoorManager {
 
-		public static var timePeriod = 500;
+		public static var timePeriod = 200;
 		
 		private var doors:Array;
 		private var doorWindow:Array;
@@ -18,19 +18,55 @@
 			model = m;
 			doors = new Array(12);
 			for (var i:int=0; i<12; i++){
-				var d:DoorModel = new DoorModel(i, this);
-				d.addEventListener(DoorEvent.TOO_EARLY, too_early);
-				d.addEventListener(DoorEvent.TOO_LATE, too_late);
-				d.addEventListener(DoorEvent.GOOD_SHOOT, good_shoot);
-				d.addEventListener(DoorEvent.MONEY, money);
-				d.addEventListener(DoorEvent.WRONG_TARGET, wrong_target);
-				doors[i] = d;
+				doors[i] = new DoorModel(i, this);
+				doors[i].addEventListener(DoorEvent.TOO_EARLY, too_early);
+				doors[i].addEventListener(DoorEvent.TOO_LATE, too_late);
+				doors[i].addEventListener(DoorEvent.GOOD_SHOOT, good_shoot);
+				doors[i].addEventListener(DoorEvent.MONEY, money);
+				doors[i].addEventListener(DoorEvent.WRONG_TARGET, wrong_target);
+				doors[i].addEventListener(DoorEvent.CLOSING_END, closing_end);
 			}
 			doorWindow = [0,1,2];
 			
 			newComingTimer = new Timer(timePeriod, 0);
 			newComingTimer.addEventListener(TimerEvent.TIMER, createNewComming);
 			newComingTimer.start();
+		}
+		
+		public function gamePause() {
+			doorWindow = [0,1,2];
+			newComingTimer.stop();
+			for (var i:int=0; i<12; i++){
+				doors[i].doorPause();
+			}
+		}
+		
+		public function gameResume() {
+			newComingTimer.start();
+		}
+		
+		public function getDoorWindow():Array {
+			return doorWindow;
+		}
+		
+		public function someOneComing(d:DoorModel) {
+			model.someOneComing(d);
+		}
+		
+	// after moving door window, check if one of the three doors
+	// is open and then begin the action
+		public function isAllDoorsClosed():Boolean {
+			var rtn:Boolean = true;
+			var msg:String = "";
+			for (var i:int = 0; i < 3; i++) {
+				var c:DoorModel = doors[doorWindow[i]];
+				if (c.doorState != DoorModel.STATECLOSE && 
+					c.doorState != DoorModel.STATECOMING) {
+					rtn = false;
+					msg += c.number + " - ";
+				}
+			}
+			return rtn;
 		}
 		
 		public function doorLogicNumber(n:int):int {
@@ -47,35 +83,43 @@
 		
 		private function too_early(e:DoorEvent):void {
 			trace("[" + e.door.number + "] too early !!!");
+			e.door.score = 100;
+			model.badShooted(e.door);
 			model.doorClose(e);
 		}
 		private function good_shoot(e:DoorEvent):void {
 			trace("[" + e.door.number + "] BOOM NICE SHOT !!!");
+			model.badShooted(e.door);
 			model.doorClose(e);
 		}
 		private function money(e:DoorEvent):void {
-			trace("[" + e.door.number + "] MONEY !!!");
+			model.moneyReceived(e.door.number);
 			model.doorClose(e);
 		}
-		
 		// bad action
 		private function too_late(e:DoorEvent):void {
 			trace("[" + e.door.number + "] TOO LATE !!!");
-			model.gameLoose(e);
+			model.doorClose(e);
+			model.gameLooseTooLate(e);
 		}
 		private function wrong_target(e:DoorEvent):void {
 			trace("[" + e.door.number + "] WRONG !!!");
-			model.gameLoose(e);
+			model.doorClose(e);
+			model.gameLooseWrong(e);
+		}
+		private function closing_end(e:DoorEvent):void {
+			model.doorClose(e);
 		}
 		
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
 		public function shootAtTheDoor(n:int):void {
-			var door:DoorModel = doors[n];
-			if (door.state == DoorModel.STATEOPENBAD ||
-				door.state == DoorModel.STATEACTIONBAD ||
-				door.state == DoorModel.STATEOPENGOOD ||
-				door.state == DoorModel.STATEACTIONGOOD) {
+			var door:DoorModel = doors[doorWindow[n]];
+			if (door.doorState == DoorModel.STATEOPENBAD ||
+				door.doorState == DoorModel.STATEACTIONBAD ||
+				door.doorState == DoorModel.STATEOPENGOOD ||
+				door.doorState == DoorModel.STATEACTIONGOOD) {
+					//trace ("[" + n + "] - SHOOT");
 					door.shootReceived();
 				}
 		}
@@ -87,15 +131,15 @@
 			} else  {
 				r = (Math.floor(Math.random() * (11 - 0 + 1)));
 				var d:DoorModel = doors[r];
-				if ( d.state == DoorModel.STATECLOSE) {
+				if ( d.doorState == DoorModel.STATECLOSE) {
 					doors[r].someoneComing();
 					
 					var msg:String = "COMING - ";
 					for each (var door:DoorModel in doors) {
-						if (door.state == DoorModel.STATECOMING)
+						if (door.doorState == DoorModel.STATECOMING)
 							msg += "[" + door.number + "] -";
 					}
-					trace(msg);
+					//trace(msg);
 				}
 			} 
 
@@ -124,39 +168,38 @@
 			else if (doorWindow[1] > 11) doorWindow[1] = 0;
 			if (doorWindow[2] < 0) doorWindow[2] = 11;
 			else if (doorWindow[2] > 11) doorWindow[2] = 0;
-			
-			//trace("doorWindow [ " + doorWindow[0] + " - " + doorWindow[1] + " - " + doorWindow[2] + " ]");
+			trace("doorWindow [ " + doorWindow[0] + " - " + doorWindow[1] + " - " + doorWindow[2] + " ]");
 		}
 		
 		public function checkDoorReady():void {
-			trace(".... CHECK if ready");
-			if (doors[doorWindow[0]].state == DoorModel.STATEREADY) {
+			if (doors[doorWindow[0]].doorState == DoorModel.STATEREADY) {
 				doors[doorWindow[0]].startDoorOpening()
-				model.doorOpen(doors[doorWindow[0]]);
+
 			}
-			if (doors[doorWindow[1]].state == DoorModel.STATEREADY) {
+			if (doors[doorWindow[1]].doorState == DoorModel.STATEREADY) {
 				doors[doorWindow[1]].startDoorOpening()
-				model.doorOpen(doors[doorWindow[1]]);
+
 			}
-			if (doors[doorWindow[2]].state == DoorModel.STATEREADY) {
+			if (doors[doorWindow[2]].doorState == DoorModel.STATEREADY) {
 				doors[doorWindow[2]].startDoorOpening()
-				model.doorOpen(doors[doorWindow[2]]);
+
 			}
 		}
 		
+		public function doorIsOpen(d:DoorModel):void {
+			model.doorOpen(d);
+		}
+		
 		public function doorIsReady(d:DoorModel):void {
-			var msg:String = "READY - ";
-			for each (var door:DoorModel in doors) {
-				if (door.state == DoorModel.STATEREADY)
-					msg += "[" + door.number + "] -";
-			}
-			trace(msg);
 			if (doorWindow[0] == d.number || 
 				doorWindow[1] == d.number || 
 				doorWindow[2] == d.number) {
-					model.doorOpen(d);
 					d.startDoorOpening();
 				}
+		}
+		
+		public function beginOpenDoor(d:DoorModel):void {
+			model.doorBeginOpen(d);
 		}
 
 	}

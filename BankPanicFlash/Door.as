@@ -10,38 +10,32 @@
 		private var kind:int;
 		private var t:Timer;
 		private var n:int;
+		private var red:Boolean;
+		private var chrono:BadTimeCounter;
 		
 		public function Door(k:int, n:int) {
+			red = false;
 			kind = k;
 			this.n = n;
-			t = new Timer(600, 1);
-			t.addEventListener(TimerEvent.TIMER, timerListener);
-			t.start();
-			this.play();
+			//t = new Timer(500, 1);
+			//t.addEventListener(TimerEvent.TIMER, timerListener);
+			//t.start();
+			this.gotoAndPlay(1);
+		}
+		
+		public function badShooted(e:GameEvent):void {
+			if (chrono != null) {
+				chrono.stopTimer();
+			}
+			
+			removeChildren();
+			if (red) p = new BadRedShooted(e);
+			else p = new BadGreenShooted(e);
+			addChild(p);
 		}
 		
 		private function timerListener (e:TimerEvent):void{
-			var r:int;
-			if (kind == DoorModel.PERSONBAD) {
-				r = (Math.floor(Math.random() * (1 - 0 + 1)) + 0);
-				if (r == 0) p = new BadRed();
-				else p = new BadGreen();
-			} else {
-				r = (Math.floor(Math.random() * (1 - 0 + 1)) + 0);
-				if (r == 0) p = new GoodRed();
-				else p = new GoodGreen();
-			}
-			this.y = 457;
-			this.x -= 20;
-			trace ("N = " + n);
-			switch (n) {
-				case 0: this.x = 122; break;
-				case 1: this.x = 373; break;
-				case 2: this.x = 624; break;
-			}
 			
-			p.y = -24;
-			addChild(p);
 		}
 	}
 	

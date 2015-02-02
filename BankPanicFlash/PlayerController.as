@@ -39,15 +39,16 @@
 		function fl_KeyboardDownHandler(event:KeyboardEvent):void
 		{
 			//trace("Key Code Pressed: " + event.keyCode);
-			if (event.keyCode == 87) {
+			if (event.keyCode == 87 && !shoot1Pressed) {
 				shoot1Pressed = true;
 				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,0) );
+				//trace ("SHOOT D1");
 			}
-			else if (event.keyCode == 88) {
+			else if (event.keyCode == 88 && !shoot2Pressed) {
 				shoot2Pressed = true;
 				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,1) );
 			}
-			else if (event.keyCode == 40) {
+			else if (event.keyCode == 40 && !shoot3Pressed) {
 				shoot3Pressed = true;
 				model.ShootPressed( new EventShootDoor(EventShootDoor.SHOOT_EVENT,2) );
 			}
