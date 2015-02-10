@@ -1,3 +1,7 @@
+import com.sun.j3d.loaders.IncorrectFormatException;
+import com.sun.j3d.loaders.ParsingErrorException;
+import com.sun.j3d.loaders.Scene;
+import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.keyboard.KeyNavigatorBehavior;
 import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
@@ -7,13 +11,12 @@ import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.pickfast.behaviors.PickRotateBehavior;
 import com.sun.j3d.utils.pickfast.behaviors.PickTranslateBehavior;
 import com.sun.j3d.utils.pickfast.behaviors.PickZoomBehavior;
+import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GraphicsConfiguration;
-import javax.swing.JFrame;
-import javax.vecmath.Vector3d;
-import com.sun.j3d.utils.universe.SimpleUniverse;
-import java.awt.Color;
+import java.io.FileNotFoundException;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Background;
@@ -22,26 +25,21 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Geometry;
 import javax.media.j3d.Light;
 import javax.media.j3d.Material;
 import javax.media.j3d.PointAttributes;
+import javax.media.j3d.Shape3D;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.swing.JFrame;
 import javax.vecmath.Color3f;
 import javax.vecmath.Color4f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
-
-/*----------------*/
-/* Classe SceneSU */
-/*----------------*/
-/**
- * Scène 3D construire sur un SimpleUniverse.
- *
- * @author	<a href="mailto:berro@univ-tlse1.fr">Alain Berro</a>
- */
-public class SceneSU extends JFrame {
+public class GrandLarge extends JFrame {
     /*---------*/
     /* Données */
     /*---------*/
@@ -54,23 +52,15 @@ public class SceneSU extends JFrame {
     private int posx;		// Position
     private int posy;
 
-    /**
-     * Objets composants la structure principale.
-     */
     private SimpleUniverse universe;
-
     private TransformGroup tgVolume; // Noeud de transformation attaché au volume
 
     private DirectionalLight dl;
     private Canvas3D canvas;
 
-
-    /*--------------*/
-    /* Constructeur */
-    /*--------------*/
-    public SceneSU(int l, int h, int px, int py) {
+    public GrandLarge(int l, int h, int px, int py) {
         /*----- Instanciation de la fenêtre graphique -----*/
-        this.setTitle("Visualisation 3D");
+        this.setTitle("GRAND LARGE");
         this.largeur = l;
         this.hauteur = h;
         this.setSize(largeur, hauteur);
@@ -96,18 +86,15 @@ public class SceneSU extends JFrame {
         this.tgVolume = new TransformGroup();
         this.tgVolume.addChild(this.createBrancheVolume());
 
-        Transform3D t3d_1 = new Transform3D();
-        t3d_1.rotX(Math.PI / 8);
-        Transform3D t3d_2 = new Transform3D();
-        t3d_2.rotY(-Math.PI / 3);
-        t3d_1.mul(t3d_2);
-        this.tgVolume.setTransform(t3d_1);
-
-
+        /* Transform3D t3d_1 = new Transform3D();
+         t3d_1.rotX(Math.PI / 8);
+         Transform3D t3d_2 = new Transform3D();
+         t3d_2.rotY(-Math.PI / 3);
+         t3d_1.mul(t3d_2);
+         this.tgVolume.setTransform(t3d_1);*/
         /*----- Position de l'observateur -----*/
         Transform3D t3d_oeil = new Transform3D();
-        t3d_oeil.set(new Vector3d(0.0, 2.0, 13.0));
-
+        t3d_oeil.set(new Vector3d(0.0, 0.0, 13.0));
         this.universe.getViewingPlatform().getViewPlatformTransform().setTransform(t3d_oeil);
 
         /*----- Création du noeud de branchement du volume -----*/
@@ -168,50 +155,60 @@ public class SceneSU extends JFrame {
     private BranchGroup createBrancheVolume() {
 
         Transform3D t3d_1 = new Transform3D();
+        Transform3D t3d_2 = new Transform3D();
 
         TransformGroup tg1 = new TransformGroup();
-        t3d_1.setTranslation(new Vector3d(0.0, 2.5, 0.0));
-        tg1.setTransform(t3d_1);
-
         tg1.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
         tg1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        RollingAction r = new RollingAction(tg1);
+        tg1.addChild(r);
 
-        Cylinder c = new Cylinder();
-        c.setAppearance(createAppearance(0));
-        tg1.addChild(c);
+        Scene s = null;
+        ObjectFile loader = new ObjectFile(ObjectFile.RESIZE);
+        try {
+            s = (Scene) loader.load("galleon.obj");
+        } catch (FileNotFoundException | ParsingErrorException | IncorrectFormatException e) {
+            System.err.println(e);
+            System.exit(1);
+        }
+        tg1.addChild(s.getSceneGroup());
 
-        TransformGroup tg2 = new TransformGroup();
-        t3d_1.setTranslation(new Vector3d(3.0, 0.0, 0.0));
-        tg2.setTransform(t3d_1);
-        tg2.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-        tg2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        TransformGroup tgy = new TransformGroup();
+        t3d_1.setTranslation(new Vector3d(0.0, 1.0, 0.0));
+        tgy.setTransform(t3d_1);
+        tgy.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+        tgy.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        AutoRotation a = new AutoRotation(tgy);
+        tgy.addChild(a);
 
-        Cone co = new Cone();
-        co.setAppearance(createAppearance(1));
-        tg2.addChild(co);
+        TransformGroup tgx = new TransformGroup();
+        t3d_1.setTranslation(new Vector3d(2.5, 0.0, 0.0));
+        tgx.setTransform(t3d_1);
 
-        TransformGroup tg3 = new TransformGroup();
-        t3d_1.setTranslation(new Vector3d(0.0, 0.0, 2.0));
-        tg3.setTransform(t3d_1);
-        tg3.setCapability(TransformGroup.ENABLE_PICK_REPORTING);
-        tg3.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-        tg3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        TransformGroup tgrx = new TransformGroup();
+        t3d_1 = new Transform3D();
+        t3d_1.rotX(-Math.PI/2);
+        t3d_2.rotZ(Math.PI/2);
+        t3d_1.mul(t3d_2);
+        tgrx.setTransform(t3d_1);
 
-        //Sphere s = new Sphere();
-        Sphere s = new Sphere(0.9f, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 30);
-        s.setAppearance(createAppearance(2));
-        tg3.addChild(s);
+        TransformGroup tgMouette = new TransformGroup();
+        Shape3D mouette = null;
+        Appearance appMouette = new Appearance();
+        appMouette.setMaterial(new Material());
+        Geometry geomMouette = new GullCG();
+        mouette = new Shape3D(geomMouette, appMouette);
+        mouette.setAppearance(createAppearance(2));
+        tgMouette.addChild(mouette);
 
         /*----- Création du noeud racine -----*/
         BranchGroup racine = new BranchGroup();
-        tg2.addChild(tg3);
-        tg1.addChild(tg2);
+        tgrx.addChild(tgMouette);
+        tgx.addChild(tgrx);
+        tgy.addChild(tgx);
+        racine.addChild(tgy);
         racine.addChild(tg1);
 
-        /*----- Création du Volume -----*/
-        // racine.addChild(new ColorCube());
-
-        /*----- Optimisation du graphe de scène -----*/
         racine.compile();
         return racine;
     }
@@ -236,7 +233,7 @@ public class SceneSU extends JFrame {
                 aspect.setColoringAttributes(new ColoringAttributes(new Color3f(Color.GREEN), ColoringAttributes.SHADE_GOURAUD));
                 aspect.setMaterial(J3dUtils.MAT_OBJET_BLEU);
 
-                TextureLoader textload = new TextureLoader("./s.jpg", this);
+                TextureLoader textload = new TextureLoader("./l.png ", this);
                 aspect.setTexture(textload.getTexture());
                 aspect.setTextureAttributes(new TextureAttributes(TextureAttributes.REPLACE, new Transform3D(), new Color4f(Color.BLACK), TextureAttributes.NICEST));
                 break;
@@ -244,13 +241,4 @@ public class SceneSU extends JFrame {
         return aspect;
     }
 
-    /*------*/
-    /* Main */
-    /*------*/
-    public static void main(String s[]) {
-        /*----- Fenêtre -----*/
-        //new SceneSU(800, 600, 0, 0);
-        new GrandLarge(800, 600, 0, 0);
-    }
-
-} /*----- Fin de la classe SceneSU -----*/
+}
