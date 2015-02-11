@@ -250,7 +250,8 @@ public class SceneSU extends JFrame {
     public static void main(String s[]) {
         /*----- Fenêtre -----*/
         //new SceneSU(800, 600, 0, 0);
-        new GrandLarge(800, 600, 0, 0);
+        //new GrandLarge(800, 600, 0, 0);
+        new AppCurseur3d(800, 600, 0, 0);
     }
 
 } /*----- Fin de la classe SceneSU -----*/
