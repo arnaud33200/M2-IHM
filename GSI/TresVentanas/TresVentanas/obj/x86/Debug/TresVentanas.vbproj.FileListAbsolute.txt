@@ -8,3 +8,15 @@ C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresV
 C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.exe
 C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.xml
 C:\cygwin64\home\arnaud\M2-IHM\GSI\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.pdb
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.exe
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.xml
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.pdb
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Form1.resources
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Resources.resources
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.SplashScreen1.resources
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.vbproj.GenerateResource.Cache
+U:\TresVentanas\TresVentanas\bin\Debug\TresVentanas.exe
+U:\TresVentanas\TresVentanas\bin\Debug\TresVentanas.pdb
+U:\TresVentanas\TresVentanas\bin\Debug\TresVentanas.xml
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Form2.resources
+U:\TresVentanas\TresVentanas\obj\x86\Debug\TresVentanas.Form3.resources

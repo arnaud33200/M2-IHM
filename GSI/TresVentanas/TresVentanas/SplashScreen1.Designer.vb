@@ -13,7 +13,6 @@ Partial Class SplashScreen1
             MyBase.Dispose(disposing)
         End Try
     End Sub
-    Friend WithEvents ApplicationTitle As System.Windows.Forms.Label
     Friend WithEvents MainLayoutPanel As System.Windows.Forms.TableLayoutPanel
 
     'Requise par le Concepteur Windows Form
@@ -24,11 +23,10 @@ Partial Class SplashScreen1
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SplashScreen1))
         Me.MainLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.ApplicationTitle = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.MainLayoutPanel.SuspendLayout()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'MainLayoutPanel
@@ -38,8 +36,6 @@ Partial Class SplashScreen1
         Me.MainLayoutPanel.ColumnCount = 2
         Me.MainLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 243.0!))
         Me.MainLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.MainLayoutPanel.Controls.Add(Me.ApplicationTitle, 1, 0)
-        Me.MainLayoutPanel.Controls.Add(Me.Button1, 0, 1)
         Me.MainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.MainLayoutPanel.Name = "MainLayoutPanel"
@@ -48,26 +44,10 @@ Partial Class SplashScreen1
         Me.MainLayoutPanel.Size = New System.Drawing.Size(496, 303)
         Me.MainLayoutPanel.TabIndex = 0
         '
-        'ApplicationTitle
+        'Timer1
         '
-        Me.ApplicationTitle.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.ApplicationTitle.BackColor = System.Drawing.Color.Transparent
-        Me.ApplicationTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ApplicationTitle.Location = New System.Drawing.Point(246, 3)
-        Me.ApplicationTitle.Name = "ApplicationTitle"
-        Me.ApplicationTitle.Size = New System.Drawing.Size(247, 212)
-        Me.ApplicationTitle.TabIndex = 0
-        Me.ApplicationTitle.Text = "Los 3 Ventanas !"
-        Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(3, 222)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 3000
         '
         'SplashScreen1
         '
@@ -82,10 +62,9 @@ Partial Class SplashScreen1
         Me.Name = "SplashScreen1"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.MainLayoutPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
 
 End Class

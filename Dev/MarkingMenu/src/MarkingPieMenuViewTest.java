@@ -84,10 +84,12 @@ public class MarkingPieMenuViewTest extends javax.swing.JComponent {
         g.fillOval(xo, yo, (outerSize*2), (outerSize*2));
 
         Point firstPoint = new Point(outerSize, outerSize);
+    // Parcours de tous les pixels
         for (int y=0; y<outerSize*2; ++y) {
             for (int x=0; x<outerSize*2; ++x) {
                 double d = firstPoint.distance(x, y);
                 
+        // Dessin des section à l'interieur
                 if (d >= innerSize && d <= outerSize-3) {
                     
                     g.setColor(Color.black);
